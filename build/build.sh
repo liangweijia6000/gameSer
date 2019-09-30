@@ -1,4 +1,5 @@
 echo "-- clean"
+make clean
 echo "-- rm CMakeCache.txt"
 rm CMakeCache.txt -rf
 echo "-- rm CMakeFiles -rf"
