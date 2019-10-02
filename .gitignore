@@ -3,3 +3,7 @@
 *.ilk
 *.pdb
 vs2017
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
