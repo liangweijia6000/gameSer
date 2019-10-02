@@ -1,12 +1,10 @@
 echo "-- clean"
-make clean
-echo "-- rm CMakeCache.txt"
+if [ -f "./MakeFile" ];then
+	make clean
+fi
 rm CMakeCache.txt -rf
-echo "-- rm CMakeFiles -rf"
 rm CMakeFiles -rf
-echo "-- rm cmake_install.cmake"
 rm cmake_install.cmake -rf
-echo "-- rm Makefile"
 rm Makefile -rf
 echo "-- start to cmake .. "
 cmake ..

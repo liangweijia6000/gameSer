@@ -108,5 +108,23 @@ typedef std::vector<bool> BoolVector;
 
 
 
+#define SINGLETON_DECLARATION(class_name) \
+	public:		static class_name& getInstance();	\
+	private:	static class_name* _instance;
+
+#define SINGLETON_DEFINITION(class_name)				\
+	class_name* class_name::_instance = NULL;			\
+	class_name& class_name::getInstance()				\
+	{													\
+	if (class_name::_instance == NULL)				\
+		{												\
+		class_name::_instance = new class_name();	\
+		}												\
+		return *class_name::_instance;					\
+	}
+
+
+
+
 #endif //_SERVER_COMMON_H_
 
