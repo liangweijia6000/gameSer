@@ -10,7 +10,6 @@ public:
 	~ConfigManager();
 public:
 	GetConfig(string path);
-
 };
 
 
