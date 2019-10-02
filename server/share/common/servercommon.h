@@ -1,6 +1,11 @@
 #ifndef _SERVER_COMMON_H_
 #define _SERVER_COMMON_H_
 
+#include <string>
+#include <map>
+#include <set>
+#include <vector>
+#include <list>
 
 #ifdef _WIN32
 typedef char char8;  
