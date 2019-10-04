@@ -1,7 +1,14 @@
-targetSer="agent.bin"
+unameres=`uname`
+
+if [[ $unameres = "Linux" ]];then
+	echo "run on linux"
+	targetSer="agent.bin"
+else
+	targetSer="agent.exe"
+fi
 
 startTime=$(date +%s)
-stms=$((startTime*1000+`date "+%N"`/1000000))
+stms=$((startTime*1000+10#`date "+%N"`/1000000))
 
 if [ -e ../bin/agnet/$targetSer ]; then
     rm $targetSer
@@ -16,7 +23,7 @@ go build -o ../../bin/agent/$targetSer -v | tee ../../build/agentBuild.log
 cd ../../bin
 
 endTime=$(date +%s)
-etms=$((endTime*1000+`date "+%N"`/1000000))
+etms=$((endTime*1000+10#`date "+%N"`/1000000))
 
 costTime=$(($etms-stms))
 

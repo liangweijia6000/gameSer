@@ -9,7 +9,7 @@ public:
 	ConfigManager();
 	~ConfigManager();
 public:
-	GetConfig(string path);
+	LoadConfig(string path);
 };
 
 
