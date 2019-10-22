@@ -15,7 +15,7 @@ func main(){
 	flag.Parse()
 	//log.Print(id)
 	if(id != 1 && id != 2){
-		log.println("Illegal Id")
+		log.Println("Illegal Id")
 		return
 	}
 
@@ -30,7 +30,5 @@ func main(){
 	port := getConfig("port")
 
 	log.Println("working on " + ip + ":" + port)
-
-	//
 }
 

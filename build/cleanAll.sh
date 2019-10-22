@@ -1,4 +1,4 @@
-echo "--clean all"
+echo "-- clean all"
 
 if [ -f "./Makefile" ];then
     make clean
