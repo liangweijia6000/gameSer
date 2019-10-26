@@ -1,15 +1,17 @@
 #ifndef _CONFIG_MANAGER_H_
 #define _CONFIG_MANAGER_H_
 
-SINGLETON_DECLARATION(ConfigManager)
+#include <common/servercommon.h>
+#include <string>
 
 class ConfigManager
 {
+	SINGLETON_DECLARATION(ConfigManager)
 public:
 	ConfigManager();
 	~ConfigManager();
 public:
-	LoadConfig(string path);
+	void LoadConfig(std::string path);
 };
 
 
