@@ -3,6 +3,7 @@
 *.ilk
 *.pdb
 *.log
+*.so
 vs2017
 CMakeCache.txt
 CMakeFiles

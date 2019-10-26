@@ -10,6 +10,7 @@ int main()
 	//ServerVar& serverVar = ServerVar::getInstance();
 	//
 	ConfigManager& configManager = ConfigManager::getInstance();
+	ServerVar& serverVar = ServerVar::getInstance();
 	
 	return 0;
 }
