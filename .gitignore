@@ -4,6 +4,9 @@
 *.pdb
 *.log
 *.so
+*.pb.go
+*.pb.h
+*.pb.cc
 vs2017
 CMakeCache.txt
 CMakeFiles
