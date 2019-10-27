@@ -1,7 +1,9 @@
 package main
 
 import (
+	"./protocol/initmsg"
 	"flag"
+	"github.com/golang/protobuf/proto"
 	"log"
 	"strconv"
 )
@@ -41,5 +43,11 @@ func main() {
 	}
 
 	log.Println("working on " + ip + ":" + port)
+
+	msg := initmsg.InitMsg{
+		Times: proto.Uint32(1),
+	}
+
+	log.Println("msg:", msg.GetTimes())
 
 }

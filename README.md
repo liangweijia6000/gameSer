@@ -1,5 +1,5 @@
 
 # gameSer
-Try to create a game server
+Try to create a online game framework
 
-TODO: confg db network log
+TODO: confg db network log protobuf client

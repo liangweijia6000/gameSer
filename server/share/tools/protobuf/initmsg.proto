@@ -2,5 +2,5 @@ syntax="proto2";
 
 message InitMsg
 {
-	required int32 times = 1;
+	required uint32 times = 1;
 }

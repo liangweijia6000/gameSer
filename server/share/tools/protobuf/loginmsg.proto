@@ -1,0 +1,6 @@
+syntax="proto2";
+
+message LoginMsg
+{
+	required uint32 authority = 1;
+} 
