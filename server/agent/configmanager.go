@@ -2,14 +2,15 @@ package main
 
 import (
 	"github.com/larspensjo/config"
-	"strconv"
 	"log"
+	"strconv"
 )
 
-const path  = "./server.conf"
+const path = "./server.conf"
+
 var configMap = make(map[string]string)
 
-func LoadConfig(id int) bool{
+func LoadConfig(id int) bool {
 	log.Println("LoadConfig")
 
 	cfg, err := config.ReadDefault(path)
@@ -18,8 +19,8 @@ func LoadConfig(id int) bool{
 		log.Fatalf("LoadConf readdefault error %v,%v", path, err)
 	}
 
-	if cfg.HasSection("agent"+strconv.Itoa(id)) {
-		option, err := cfg.SectionOptions("agent"+strconv.Itoa(id))
+	if cfg.HasSection("agent" + strconv.Itoa(id)) {
+		option, err := cfg.SectionOptions("agent" + strconv.Itoa(id))
 		if err == nil {
 			for _, v := range option {
 				optionValue, err := cfg.String("agent"+strconv.Itoa(id), v)
@@ -28,8 +29,7 @@ func LoadConfig(id int) bool{
 				}
 			}
 		}
-	}else
-	{
+	} else {
 		log.Println("!HasSection(agent)")
 		return false
 	}

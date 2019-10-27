@@ -1,12 +1,11 @@
 
-startTime=$(date +%s)
-stms=$((startTime*1000+`date "+%N"`/1000000))
+startTime=$(date +%s%N)
 
 make -j8
 
-endTime=$(date +%s)
-etms=$((endTime*1000+`date "+%N"`/1000000))
+endTime=$(date +%s%N)
 
-costTime=$(($etms-stms))
+costTime=$(($(($endTime-$startTime))/1000000))
+
 
 echo "takes $costTime ms"
