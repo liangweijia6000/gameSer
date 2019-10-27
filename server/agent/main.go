@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"strconv"
 )
 
 var id int
@@ -19,9 +20,9 @@ func main(){
 		return
 	}
 
-	log.Println("agent start")
+	log.Println("agent" + strconv.Itoa(id) + " start" )
 
-	if (!LoadConfig()){
+	if (!LoadConfig(id)){
 		log.Println("LoadConfig error")
 		return
 	}
@@ -29,6 +30,17 @@ func main(){
 	ip := getConfig("ip")
 	port := getConfig("port")
 
+	if(ip == "") {
+		log.Println("error ip == \"\"")
+		return
+	}
+
+	if(port == ""){
+		log.Println("error port == \"\"")
+		return
+	}
+
 	log.Println("working on " + ip + ":" + port)
+
 }
 
