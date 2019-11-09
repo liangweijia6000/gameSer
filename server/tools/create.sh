@@ -8,11 +8,13 @@ for file in ./protobuf/*
 do
 	echo -e "-- Processing $file ... \c"
 	protoc -I=./protobuf/ --cpp_out=./cpp/ $file
-	echo Done
+	echo -e "\033[32m\033[1mDone\033[0m"
 done
 
+echo -e "\033[32m\033[1m""-- Copy to server common workspace ...\033[0m"
 
-#protoc -I=./protobuf/ --cpp_out=./cpp/ ./protobuf/*.proto
+cp ./cpp/* ../share/protocol/ -rf
+
 
 echo "-- Create for golang"
 for file in ./protobuf/*.proto
@@ -22,10 +24,10 @@ do
 	path=${filename%.*}
 	mkdir ./go/$path
 	protoc -I=./protobuf/ --go_out=./go/$path $file
-	echo Done
+	echo -e "\033[32m\033[1mDone\033[0m"
 done
 
-echo "-- Copy to agent workspace ..."
-cp ./go/* ../../agent/protocol/ -rf
+echo -e "\033[32m\033[1m"-- Copy to agent workspace ..."\033[0m"
+cp ./go/* ../agent/protocol/ -rf
 
-echo "-- All done"
+echo -e "\033[32m\033[1m"-- All done"\033[0m"

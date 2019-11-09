@@ -2,7 +2,7 @@
 #include "common/servercommon.h"
 #include "servervar/servervar.h"
 #include "config/configmanager.h"
-#include "tools/cpp/init.pb.h"
+#include "protocol/initmsg.pb.h"
 
 int main()
 {
@@ -11,9 +11,16 @@ int main()
 	//ServerVar& serverVar = ServerVar::getInstance();
 	//
 	ConfigManager& configManager = ConfigManager::getInstance();
+	configManager.LoadConfig("config");
 	ServerVar& serverVar = ServerVar::getInstance();
 	InitMsg msg;
 	msg.set_times(1);
+
+	//main loop
+	//bind port
+	
+	//
+
 	
 	return 0;
 }

@@ -48,6 +48,5 @@ func main() {
 		Times: proto.Uint32(1),
 	}
 
-	log.Println("msg:", msg.GetTimes())
-
+	log.Println("msg.times", msg.GetTimes())
 }

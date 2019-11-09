@@ -13,5 +13,5 @@ ConfigManager::~ConfigManager()
 
 void ConfigManager::LoadConfig(std::string path)
 {
-	printf("ConfigManager::LoadConfig:%s", path.c_str());
+	printf("ConfigManager::LoadConfig:%s\n", path.c_str());
 }
