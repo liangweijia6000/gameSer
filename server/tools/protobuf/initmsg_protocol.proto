@@ -4,3 +4,8 @@ message InitMsg
 {
 	required uint32 times = 1;
 }
+
+message TestMsg
+{
+	required uint32 test = 1;
+}

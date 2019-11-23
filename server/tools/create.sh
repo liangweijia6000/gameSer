@@ -2,6 +2,8 @@
 echo "-- Clean"
 rm ./cpp/* -rf
 rm ./go/* -rf
+rm ../agent/protocol/* -rf
+rm ../share/protocol/* -rf
 
 echo "-- Create for cpp"
 for file in ./protobuf/*
@@ -10,6 +12,20 @@ do
 	protoc -I=./protobuf/ --cpp_out=./cpp/ $file
 	echo -e "\033[32m\033[1mDone\033[0m"
 done
+
+touch ./protocol.pb.h
+
+for file in ./cpp/*
+do
+	filename=${file##*/}
+	extname=${filename##*.}
+	if [ "$extname" = "h" ];then
+		echo "#include <protocol/$filename>" >> ./protocol.pb.h
+	fi
+done
+
+mv ./protocol.pb.h ./cpp/
+
 
 echo -e "\033[32m\033[1m""-- Copy to server common workspace ...\033[0m"
 

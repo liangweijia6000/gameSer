@@ -2,7 +2,7 @@
 #include "common/servercommon.h"
 #include "servervar/servervar.h"
 #include "config/configmanager.h"
-#include "protocol/initmsg.pb.h"
+#include "protocol/protocol.pb.h"
 
 int main()
 {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./protocol/initmsg"
+	initmsg "./protocol/initmsg_protocol"
 	"flag"
 	"github.com/golang/protobuf/proto"
 	"log"
