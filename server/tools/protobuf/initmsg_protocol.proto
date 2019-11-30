@@ -3,9 +3,28 @@ syntax="proto2";
 message InitMsg
 {
 	required uint32 times = 1;
+	optional string name = 2;
+	repeated uint64 attrs = 3;
 }
 
 message TestMsg
+{
+	required uint32 test = 1;
+}
+
+message TestMsg1
+{
+	required uint32 test = 1;
+}
+
+
+message TestMsg2
+{
+	required uint32 test = 1;
+}
+
+
+message TestMsg3
 {
 	required uint32 test = 1;
 }

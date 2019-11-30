@@ -11,10 +11,12 @@ int main()
 	//ServerVar& serverVar = ServerVar::getInstance();
 	//
 	ConfigManager& configManager = ConfigManager::getInstance();
-	configManager.LoadConfig("config");
+	configManager.LoadConfig("game1");
 	ServerVar& serverVar = ServerVar::getInstance();
 	InitMsg msg;
 	msg.set_times(1);
+
+
 
 	//main loop
 	//bind port
