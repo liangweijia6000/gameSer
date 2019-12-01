@@ -15,7 +15,6 @@ func LoadConfig(id int) bool {
 
 	cfg, err := config.ReadDefault(path)
 	if err != nil {
-		return false
 		log.Fatalf("LoadConf readdefault error %v,%v", path, err)
 	}
 

@@ -7,23 +7,6 @@
 
 const static String INI_PATH="./server.conf";
 
-
-struct IniNode
-{
-	IniNode(String root, String key, String value)
-	{
-		_root = root;
-		_key = key;
-		_value = value;
-	}
-	String _root;
-	String _key;
-	String _value;
-};
-
-
-
-
 class ConfigManager
 {
 	SINGLETON_DECLARATION(ConfigManager)
@@ -31,7 +14,13 @@ public:
 	ConfigManager();
 	~ConfigManager();
 public:
-	void LoadConfig(std::string path);
+	bool Init();
+	const std::map<String, String>* GetConfigMap(String section);
+private:
+	bool LoadConfig(std::string path);
+
+private:
+	std::map<String, std::map<String, String>> _configMap;
 };
 
 
