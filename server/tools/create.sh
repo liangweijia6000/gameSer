@@ -5,6 +5,22 @@ rm ./go/* -rf
 rm ../agent/protocol/* -rf
 rm ../share/protocol/* -rf
 
+if [ ! -d "cpp" ]; then
+	mkdir cpp
+fi
+
+if [ ! -d "go" ]; then
+	mkdir go
+fi
+
+if [ ! -d "../share/protocol" ]; then
+	mkdir ../share/protocol
+fi
+
+if [ ! -d "../agent/protocol" ]; then
+	mkdir ../agent/protocol
+fi
+
 echo "-- Create for cpp"
 for file in ./protobuf/*
 do
