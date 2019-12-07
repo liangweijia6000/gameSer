@@ -29,9 +29,7 @@ int main(int argc,char *argv[])
 		printf("game1config %s\n", it.first.c_str());
 		printf("game1config %s\n", it.second.c_str());
 	}
-
-
-
+	
 	ServerVar& serverVar = ServerVar::getInstance();
 
 	InitMsg msg;

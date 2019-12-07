@@ -2,8 +2,6 @@
 #define _CONFIG_MANAGER_H_
 
 #include <common/servercommon.h>
-#include <string>
-
 
 const static String INI_PATH="./server.conf";
 
