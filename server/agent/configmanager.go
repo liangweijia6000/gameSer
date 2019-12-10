@@ -8,9 +8,12 @@ import (
 
 const path = "./server.conf"
 
-var configMap = make(map[string]string)
+type ConfigManager struct {
+	configMap map[string]string
+	gsAddrConfig map[string]string
+}
 
-func LoadConfig(id int) bool {
+func (configMgr *ConfigManager) LoadConfig(id int) bool {
 	log.Println("LoadConfig")
 
 	cfg, err := config.ReadDefault(path)
@@ -24,7 +27,7 @@ func LoadConfig(id int) bool {
 			for _, v := range option {
 				optionValue, err := cfg.String("agent"+strconv.Itoa(id), v)
 				if err == nil {
-					configMap[v] = optionValue
+					configMgr.configMap[v] = optionValue
 				}
 			}
 		}
@@ -35,6 +38,6 @@ func LoadConfig(id int) bool {
 	return true
 }
 
-func getConfig(key string) string {
-	return configMap[key]
+func (configMgr *ConfigManager)getConfig(key string) string {
+	return configMgr.configMap[key]
 }

@@ -7,6 +7,7 @@
 *.pb.go
 *.pb.h
 *.pb.cc
+*.out
 vs2017
 CMakeCache.txt
 CMakeFiles

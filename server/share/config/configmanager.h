@@ -3,6 +3,7 @@
 
 #include <common/servercommon.h>
 
+struct IpAddr;
 const static String INI_PATH="./server.conf";
 
 class ConfigManager
@@ -14,41 +15,13 @@ public:
 public:
 	bool Init();
 	const std::map<String, String>* GetConfigMap(String section);
+	bool GetConfigIpAddr(String section, IpAddr &ipAddr);
 private:
 	bool LoadConfig(std::string path);
 
 private:
 	std::map<String, std::map<String, String>> _configMap;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

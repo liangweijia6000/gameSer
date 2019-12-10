@@ -1,7 +1,7 @@
 
 startTime=$(date +%s%N)
 
-make -j4
+make -j8
 
 endTime=$(date +%s%N)
 

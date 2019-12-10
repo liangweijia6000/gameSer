@@ -40,6 +40,8 @@ do
 	fi
 done
 
+cat ./enum.include >> ./protocol.pb.h
+
 mv ./protocol.pb.h ./cpp/
 
 
@@ -61,5 +63,6 @@ done
 
 echo -e "\033[32m\033[1m"-- Copy to agent workspace ..."\033[0m"
 cp ./go/* ../agent/protocol/ -rf
+
 
 echo -e "\033[32m\033[1m"-- All done"\033[0m"

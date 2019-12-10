@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "configmanager.h"
+#include "network/networkmanager.h"
 
 SINGLETON_DEFINITION(ConfigManager)
 
@@ -32,9 +33,39 @@ const std::map<String, String>* ConfigManager::GetConfigMap(String section)
 	return NULL;
 }
 
+bool ConfigManager::GetConfigIpAddr(String section, IpAddr &ipAddr)
+{
+	if (_configMap.find(section) == _configMap.end())
+	{
+		return false;
+	}
+
+	std::map<String, String>& secConfigMap = _configMap[section];
+
+	auto ipIter = secConfigMap.find("ip");
+	if (ipIter == secConfigMap.end())
+	{
+		return false;
+	}else
+	{
+		ipAddr.ip = ipIter->second;
+	}
+
+	auto portIter = secConfigMap.find("port");
+	if (portIter == secConfigMap.end())
+	{
+		return false;
+	}else
+	{
+		ipAddr.port = atoi(portIter->second.c_str());
+	}
+
+	return true;
+}
+
 bool ConfigManager::LoadConfig(String path)
 {
-	printf("ConfigManager::LoadConfig:%s\n", path.c_str());
+	printf("ConfigManager::LoadConfig\n");
 
 	std::ifstream fileStream(path.c_str());
 

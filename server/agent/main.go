@@ -1,11 +1,11 @@
 package main
 
-import (
-	initmsg "./protocol/initmsg_protocol"
-	"flag"
-	"github.com/golang/protobuf/proto"
+import (	
+	"flag"	
 	"log"
 	"strconv"
+	"os"
+	"time"
 )
 
 var id int
@@ -16,7 +16,6 @@ func init() {
 
 func main() {
 	flag.Parse()
-	//log.Print(id)
 	if id != 1 && id != 2 {
 		log.Println("Illegal Id")
 		return
@@ -24,13 +23,18 @@ func main() {
 
 	log.Println("Agent" + strconv.Itoa(id) + " start")
 
-	if !LoadConfig(id) {
+	configManager := ConfigManager{
+		configMap : make(map[string]string),
+		gsAddrConfig : make(map[string]string),
+	}
+
+	if !configManager.LoadConfig(id) {
 		log.Println("LoadConfig error")
 		return
 	}
 
-	ip := getConfig("ip")
-	port := getConfig("port")
+	ip := configManager.getConfig("ip")
+	port := configManager.getConfig("port")
 
 	if ip == "" {
 		log.Println("error ip == \"\"")
@@ -44,9 +48,28 @@ func main() {
 
 	log.Println("working on " + ip + ":" + port)
 
-	msg := initmsg.InitMsg{
-		Times: proto.Uint32(1),
+	gameClient := GameClinet {
+		ip : "127.0.0.1",
+		port : "15001",
 	}
 
-	log.Println("msg.times", msg.GetTimes())
+	gameClient.Start();
+
+	for {
+		time.Sleep(1000000000)
+		gameClient.Process()
+	}
+
+	//msg := initmsg.InitMsg{
+	//	Times: proto.Uint32(1),
+	//}
+
+	//log.Println("msg.times", msg.GetTimes())
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Println(err.Error())
+		os.Exit(1)
+	}
 }

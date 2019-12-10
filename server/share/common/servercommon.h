@@ -7,6 +7,8 @@
 #include <vector>
 #include <list>
 
+#include <cstring>
+
 #ifdef _WIN32
 typedef char char8;  
 typedef unsigned short char16;

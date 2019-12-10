@@ -1,0 +1,37 @@
+
+#ifndef _PROTOCOL_PB_H_
+#define _PROTOCOL_PB_H_
+
+
+#include "common/servercommon.h"
+#include "msghandle/msghandle.h"
+
+
+class IMessageSer
+{
+    //
+};
+
+
+template<class HANDLE, class MSG>
+class MessageSer : public IMessageSer
+{
+};
+
+
+typedef struct MsgInfo
+{
+    uint32 msgType;
+    IMessageSer* msg;
+}MsgInfo;
+
+enum MsgType
+{
+    EInitMsg = 0,
+};
+
+static struct MsgInfo msgInfo[] = {
+    {EInitMsg, new MessageSer<MsgHandle, InitMsgA2C>},
+};
+
+#endif //_PROTOCOL_PB_H_
