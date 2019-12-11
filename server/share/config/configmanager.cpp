@@ -20,7 +20,8 @@ bool ConfigManager::Init()
 	if (!LoadConfig(INI_PATH))
 	{
 		return false;
-	}	
+	}
+	return true;
 }
 
 const std::map<String, String>* ConfigManager::GetConfigMap(String section)
@@ -109,6 +110,7 @@ bool ConfigManager::LoadConfig(String path)
 
 		pNodeMap = &_configMap[strSection];
 	}
+	return true;
 }
 
 

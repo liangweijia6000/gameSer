@@ -29,8 +29,8 @@ do
 	echo -e "\033[32m\033[1mDone\033[0m"
 done
 
+echo -e "\033[32m\033[1m""-- Create protocol.pb.h ...\033[0m \c"
 touch ./protocol.pb.h
-
 for file in ./cpp/*
 do
 	filename=${file##*/}
@@ -39,16 +39,13 @@ do
 		echo "#include <protocol/$filename>" >> ./protocol.pb.h
 	fi
 done
-
 cat ./enum.include >> ./protocol.pb.h
-
 mv ./protocol.pb.h ./cpp/
+echo -e "\033[32m\033[1mDone\033[0m"
 
-
-echo -e "\033[32m\033[1m""-- Copy to server common workspace ...\033[0m"
-
+echo -e "\033[32m\033[1m""-- Copy to server common workspace ...\033[0m \c"
 cp ./cpp/* ../share/protocol/ -rf
-
+echo -e "\033[32m\033[1mDone\033[0m"
 
 echo "-- Create for golang"
 for file in ./protobuf/*.proto
@@ -61,8 +58,9 @@ do
 	echo -e "\033[32m\033[1mDone\033[0m"
 done
 
-echo -e "\033[32m\033[1m"-- Copy to agent workspace ..."\033[0m"
+echo -e "\033[32m\033[1m"-- Copy to agent workspace ..."\033[0m \c"
 cp ./go/* ../agent/protocol/ -rf
+echo -e "\033[32m\033[1mDone\033[0m"
 
 
-echo -e "\033[32m\033[1m"-- All done"\033[0m"
+echo -e "\033[32m\033[1m"-- All Done"\033[0m"
