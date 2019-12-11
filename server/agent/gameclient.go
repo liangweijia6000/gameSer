@@ -35,7 +35,7 @@ func (s *GameClinet) Process() {
 }
 
 func (s *GameClinet) sendHeartBeatMsg() {
-	msg := &initmsg.InitMsg{
+	msg := &initmsg.InitMsgA2C{
 		Times: proto.Uint32(1),
 	}
 	sendData, err := proto.Marshal(msg)
