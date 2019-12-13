@@ -1,0 +1,8 @@
+
+typedef struct MsgInfo
+{
+    MsgType msgType;
+    IMessageSer* msg;
+}MsgInfo;
+
+#endif //_PROTOCOL_PB_H_

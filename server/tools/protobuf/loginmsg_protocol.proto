@@ -1,6 +1,6 @@
 syntax="proto2";
 
-message LoginMsg
+message LoginMsgC2G
 {
 	required uint32 authority = 1;
 } 

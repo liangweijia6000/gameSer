@@ -15,3 +15,6 @@ Makefile
 cmake_install.cmake
 server.conf
 server/.vscode/
+temp.*
+msghandle.h
+server/tools/cpp/msghandle/*

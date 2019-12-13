@@ -1,0 +1,13 @@
+
+class IMessageSer
+{
+    //
+};
+
+template<class HANDLE, class MSG>
+class MessageSer : public IMessageSer
+{
+};
+
+
+
