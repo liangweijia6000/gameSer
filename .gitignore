@@ -18,3 +18,5 @@ server/.vscode/
 temp.*
 msghandle.h
 server/tools/cpp/msghandle/*
+.vscode/
+*.a

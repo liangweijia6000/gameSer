@@ -18,7 +18,7 @@ int main(int argc,char *argv[])
 
 	printf("Server %s running\n", serverNameStr.c_str());
 
-	if (ConfigManager::getInstance().Init())
+	if (!ConfigManager::getInstance().Init())
 	{
 		printf("main ConfigManager Init error \n");
 		return 0;
@@ -46,7 +46,7 @@ int main(int argc,char *argv[])
 		return 0;
 	}
 		
-	ServerVar& serverVar = ServerVar::getInstance();
+	//ServerVar& serverVar = ServerVar::getInstance();	
 
 	while (1)
 	{
