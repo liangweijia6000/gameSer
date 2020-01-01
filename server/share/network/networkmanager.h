@@ -10,7 +10,6 @@ struct IpAddr
 	uint32 port;
 };
 
-
 class NetworkManager
 {
     SINGLETON_DECLARATION(NetworkManager)
@@ -18,10 +17,11 @@ public:
 	NetworkManager();
 	~NetworkManager();
 public:
-	void Init();
-	Service* CreateService(IpAddr ipAddr);
+	bool Init(String serverName);
+	Service* CreateService();
 	Service* GetService();
 private:
+	IpAddr ipAddr;
 	Service* pService;
 
 };
