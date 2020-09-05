@@ -23,27 +23,27 @@ int main(int argc,char *argv[])
 		printf("main ConfigManager Init error \n");
 		return 0;
 	}
-    
-	if(NetworkManager::getInstance().Init(serverNameStr))
-    {
-        return 0;
-    }
-    
+
+	if(!NetworkManager::getInstance().Init(serverNameStr))
+	{
+		return 0;
+	}
+
 	Service* pService = NetworkManager::getInstance().CreateService();
 	if (!pService)
 	{
 		printf("main NetworkManager createService eroor \n");
 		return 0;
 	}
-		
+
 	//ServerVar& serverVar = ServerVar::getInstance();	
 
 	while (1)
 	{
-		usleep(10000);
+		//usleep(10000);
 		pService->Process();
 	}
-	
+
 	return 0;
 }
 
