@@ -9,6 +9,8 @@
 #include "service.h"
 #include "networkmanager.h"
 
+#include "protocol/protocol.pb.h"
+
 Service::Service(IpAddr ipAddr)
 {
     this->ip = ipAddr.ip;
@@ -79,6 +81,7 @@ void Service::Stop()
 
 void Service::Process()
 {
+    //printf("Service::Process\n");
     struct sockaddr_in remoteAddr;
 
     uint32 structLen = sizeof(struct sockaddr);
@@ -96,7 +99,8 @@ void Service::Process()
     {
         char buf[BUFSIZ];
         memset(buf, 0, BUFSIZ);
-        int32 len = recv(*it, buf, BUFSIZ, 0);
+
+        int32 len = recv(*it, &buf, BUFSIZ, 0);
         if ((len < 0 && errno != EWOULDBLOCK) || len == 0)
         {
             this->socketfdVec.erase(it);
@@ -104,7 +108,15 @@ void Service::Process()
             continue;
         }
 
-        printf("Service::Process recv:%s \n", buf);
+        InitMsgA2C tempmsg;
+        tempmsg.ParseFromString(buf);
+
+        printf("Service::Process recv len:%d\n", len);
+
+        printf("Service::Process recv:%d \n", tempmsg.times());
+        printf("Service::Process recv:%s \n", tempmsg.name().c_str());
+
+        //printf("Service::Process recv:%s \n", buf);
     }
 }
 

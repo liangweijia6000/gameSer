@@ -1,7 +1,7 @@
 package main
 
-import (	
-	"flag"	
+import (
+	"flag"
 	"log"
 	"strconv"
 	"os"
@@ -55,7 +55,7 @@ func main() {
 
 	gameClient.Start();
 
-	for {
+	for {	//主循环怎么写
 		time.Sleep(1000000000)
 		gameClient.Process()
 	}

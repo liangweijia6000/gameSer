@@ -5,8 +5,8 @@
 SINGLETON_DEFINITION(NetworkManager)
 
 NetworkManager::NetworkManager()
+    : pService(NULL)
 {
-    //
 }
 
 NetworkManager::~NetworkManager()
@@ -22,13 +22,15 @@ bool NetworkManager::Init(String serverNameStr)
 		printf("NetworkManager::Init GetConfigIpAddr error \n");
 		return false;
 	}
+
+    printf("NetworkManager::Init ip:%s port:%d \n", this->ipAddr.ip.c_str(), this->ipAddr.port);
     return true;
 }
 
 Service* NetworkManager::CreateService()
 {
     printf("NetworkManager::CreateService\n");
-    if (this->pService != NULL)
+    if (this->pService == NULL)
     {
         this->pService = new Service(this->ipAddr);
     }else

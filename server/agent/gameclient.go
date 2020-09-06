@@ -8,6 +8,9 @@ import (
 	//"strconv"
 )
 
+
+//gameclient used to connect to the game server
+
 type GameClinet struct {
 	ip string
 	port string
@@ -36,10 +39,13 @@ func (s *GameClinet) Process() {
 
 func (s *GameClinet) sendHeartBeatMsg() {
 	msg := &initmsg.InitMsgA2C{
-		Times: proto.Uint32(1),
+		Times: proto.Uint32(18),
+		Name:  proto.String("lwj"),
 	}
 	sendData, err := proto.Marshal(msg)
-	checkErr(err)
+	checkErrErr(err)
+
+	//sendData := "asdf"
 
 	if s.conn != nil {
 		s.conn.Write([]byte(sendData))

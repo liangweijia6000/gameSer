@@ -2,6 +2,7 @@ syntax="proto2";
 
 message InitMsgA2C
 {
+	//
 	required uint32 times = 1;
 	optional string name = 2;
 	repeated uint64 attrs = 3;
