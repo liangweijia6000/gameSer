@@ -14,6 +14,9 @@ public:
     ~Service();
 public:
     bool Start();
+
+    bool Start_epoll();
+
     void Stop();
     void Reset(IpAddr ipAddr);
     void Process();
@@ -26,6 +29,9 @@ private:
     int32 socketfd;
     Int32Vector socketfdVec;
     bool isRun;
+
+private:
+    int32 epollfd = 0;
 };
 
 #endif  //_SERVICE_H_

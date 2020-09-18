@@ -29,4 +29,4 @@ install protobuf:
  ```
 
  
-
+go env -w GOPROXY=https://goproxy.cn

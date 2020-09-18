@@ -12,13 +12,13 @@ int main()
 
 	printf("Server %s running\n", serverNameStr.c_str());
 
-	if (ConfigManager::getInstance().Init())
+	if (!ConfigManager::getInstance().Init())
 	{
 		printf("main ConfigManager Init error \n");
 		return 0;
 	}
 
-	if(NetworkManager::getInstance().Init(serverNameStr))
+	if(!NetworkManager::getInstance().Init(serverNameStr))
     {
         return 0;
     }
@@ -30,7 +30,7 @@ int main()
 		return 0;
 	}
 
-	if(!pService->Start())
+	if(!pService->Start_epoll())
 	{
 		printf("main service start error\n");
 		return 0;
@@ -39,7 +39,7 @@ int main()
 	while (1)
 	{
 		usleep(10000);
-		pService->Process();
+		//pService->Process();
 	}
 	
 	return 0;

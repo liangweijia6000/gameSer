@@ -68,6 +68,13 @@ bool Service::Start()
     return true;
 }
 
+bool Service::Start_epoll()
+{
+    epollfd = epoll_create(4096);
+    printf("Service::Start_epoll epollfd:%d\n", epollfd);
+    return true;
+}
+
 void Service::Stop()
 {
     close(this->socketfd);

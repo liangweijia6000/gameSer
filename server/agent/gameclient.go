@@ -43,7 +43,7 @@ func (s *GameClinet) sendHeartBeatMsg() {
 		Name:  proto.String("lwj"),
 	}
 	sendData, err := proto.Marshal(msg)
-	checkErrErr(err)
+	checkErr(err)
 
 	//sendData := "asdf"
 

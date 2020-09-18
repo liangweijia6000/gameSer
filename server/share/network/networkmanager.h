@@ -1,6 +1,8 @@
 #ifndef _NETWORK_MANAGER_H_
 #define _NETWORK_MANAGER_H_
 
+#include <sys/epoll.h>
+
 #include "common/servercommon.h"
 #include "service.h"
 
