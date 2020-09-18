@@ -23,7 +23,7 @@ int main(int argc,char *argv[])
 		return 0;
 	}
     
-	if(ANetworkManager::getInstance().start(serverNameStr))
+	if(!ANetworkManager::getInstance().start(serverNameStr))
     {
         return 0;
     }  

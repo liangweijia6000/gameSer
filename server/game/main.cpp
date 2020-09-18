@@ -36,12 +36,14 @@ int main(int argc,char *argv[])
 		return 0;
 	}
 
+	pService->Start_epoll();
+
 	//ServerVar& serverVar = ServerVar::getInstance();	
 
 	while (1)
 	{
 		usleep(10000);
-		pService->Process();
+		pService->Process_epoll();
 	}
 
 	return 0;

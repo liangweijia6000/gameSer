@@ -6,8 +6,8 @@ import (
 	initmsg "./protocol/initmsg_protocol"
 	//"time"
 	//"strconv"
+	"log"
 )
-
 
 //gameclient used to connect to the game server
 

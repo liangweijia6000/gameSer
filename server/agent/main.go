@@ -56,7 +56,7 @@ func main() {
 	gameClient.Start();
 
 	for {	//主循环怎么写
-		time.Sleep(1000000000)
+		time.Sleep(100000000)
 		gameClient.Process()
 	}
 

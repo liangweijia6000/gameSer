@@ -20,13 +20,16 @@ public:
     void Stop();
     void Reset(IpAddr ipAddr);
     void Process();
+
+    void Process_epoll();
+
     void SendMsg(char* msg);
     bool IsRun();
 private:
 private:
     String ip;
     uint32 port;
-    int32 socketfd;
+    int32 listenSocketfd;
     Int32Vector socketfdVec;
     bool isRun;
 
