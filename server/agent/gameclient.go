@@ -3,10 +3,10 @@ package main
 import (
 	"net"
 	"github.com/golang/protobuf/proto"
-	initmsg "./protocol/initmsg_protocol"
+	initmsg "agent/protocol/initmsg_protocol"
 	//"time"
 	//"strconv"
-	"log"
+	//"log"
 )
 
 //gameclient used to connect to the game server
