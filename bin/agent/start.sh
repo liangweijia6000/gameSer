@@ -1,4 +1,4 @@
 
 #nohup ./agent.bin 1 &
 
-./agent.bin
+./agent.bin 1

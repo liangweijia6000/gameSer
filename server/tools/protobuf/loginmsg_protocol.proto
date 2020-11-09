@@ -1,6 +1,11 @@
 syntax="proto2";
 
-message LoginMsgC2G
+message LoginReqC2A
 {
-	required uint32 authority = 1;
-} 
+	required bytes plataccid = 1;
+}
+
+message LoginAckA2C
+{
+	required uint32 result = 1;
+}

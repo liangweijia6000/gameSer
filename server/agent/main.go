@@ -60,11 +60,6 @@ func main() {
 		gameClient.Process()
 	}
 
-	//msg := initmsg.InitMsg{
-	//	Times: proto.Uint32(1),
-	//}
-
-	//log.Println("msg.times", msg.GetTimes())
 }
 
 func checkErr(err error) {

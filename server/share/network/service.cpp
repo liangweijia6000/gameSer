@@ -131,7 +131,7 @@ void Service::Stop()
 
 void Service::Process()
 {
-    //printf("Service::Process\n");
+    printf("Service::Process\n");
     struct sockaddr_in remoteAddr;
 
     uint32 structLen = sizeof(struct sockaddr);
@@ -158,13 +158,13 @@ void Service::Process()
             continue;
         }
 
-        InitMsgA2C tempmsg;
-        tempmsg.ParseFromString(buf);
+        //InitMsgA2C tempmsg;
+        //tempmsg.ParseFromString(buf);
 
-        printf("Service::Process recv len:%d\n", len);
+        //printf("Service::Process recv len:%d\n", len);
 
-        printf("Service::Process recv:%d \n", tempmsg.times());
-        printf("Service::Process recv:%s \n", tempmsg.name().c_str());
+        //printf("Service::Process recv:%d \n", tempmsg.times());
+        //printf("Service::Process recv:%s \n", tempmsg.name().c_str());
 
         //printf("Service::Process recv:%s \n", buf);
     }
@@ -236,13 +236,8 @@ void Service::Process_epoll()
         }else if (events[i].events & EPOLLOUT)
         {
             //
-        }
-        
-        
-        
-    }
-    
-    
+        }        
+    }    
 }
 
 
