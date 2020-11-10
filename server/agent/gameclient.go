@@ -1,9 +1,10 @@
 package main
 
 import (
-	"net"
-	"github.com/golang/protobuf/proto"
 	initmsg "agent/protocol/initmsg_protocol"
+	"net"
+
+	"github.com/golang/protobuf/proto"
 	//"time"
 	//"strconv"
 	//"log"
@@ -11,12 +12,14 @@ import (
 
 //gameclient used to connect to the game server
 
+//GameClinet client info of connection
 type GameClinet struct {
-	ip string
+	ip   string
 	port string
 	conn *net.TCPConn
 }
 
+//Start the GameClient
 func (s *GameClinet) Start() {
 	gsAddr := s.ip + ":" + s.port
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", gsAddr)
@@ -27,12 +30,14 @@ func (s *GameClinet) Start() {
 	s.conn = conn
 }
 
+//Send msg
 func (s *GameClinet) Send(msg []byte) {
 	if s.conn != nil {
-		s.conn.Write(msg)		
+		s.conn.Write(msg)
 	}
 }
 
+//Process GameClient
 func (s *GameClinet) Process() {
 	s.sendHeartBeatMsg()
 }
@@ -51,6 +56,3 @@ func (s *GameClinet) sendHeartBeatMsg() {
 		s.conn.Write([]byte(sendData))
 	}
 }
-
-
-

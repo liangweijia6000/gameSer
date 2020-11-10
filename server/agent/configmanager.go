@@ -1,18 +1,21 @@
 package main
 
 import (
-	"github.com/larspensjo/config"
 	"log"
 	"strconv"
+
+	"github.com/larspensjo/config"
 )
 
 const path = "./server.conf"
 
+//ConfigManager base struct for config info
 type ConfigManager struct {
-	configMap map[string]string
+	configMap    map[string]string
 	gsAddrConfig map[string]string
 }
 
+//LoadConfig a func for load config info
 func (configMgr *ConfigManager) LoadConfig(id int) bool {
 	log.Println("LoadConfig")
 
@@ -38,6 +41,6 @@ func (configMgr *ConfigManager) LoadConfig(id int) bool {
 	return true
 }
 
-func (configMgr *ConfigManager)getConfig(key string) string {
+func (configMgr *ConfigManager) getConfig(key string) string {
 	return configMgr.configMap[key]
 }
