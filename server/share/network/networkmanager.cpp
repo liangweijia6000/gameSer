@@ -14,14 +14,10 @@ NetworkManager::~NetworkManager()
     //
 }
 
-bool NetworkManager::Init(String serverNameStr)
+bool NetworkManager::Init(IpAddr& in)
 {
-    printf("NetworkManager::Init\n");
-    if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, this->ipAddr))
-	{
-		printf("NetworkManager::Init GetConfigIpAddr error \n");
-		return false;
-	}
+    this->ipAddr.ip = in.ip;
+    this->ipAddr.port = in.port;
 
     printf("NetworkManager::Init ip:%s port:%d \n", this->ipAddr.ip.c_str(), this->ipAddr.port);
     return true;

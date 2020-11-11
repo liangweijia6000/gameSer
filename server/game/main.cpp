@@ -5,6 +5,7 @@
 #include "config/configmanager.h"
 #include "protocol/protocol.pb.h"
 #include "network/networkmanager.h"
+#include "network/epollthread.h"
 
 int main(int argc,char *argv[])
 {
@@ -24,9 +25,28 @@ int main(int argc,char *argv[])
 		return 0;
 	}
 
-	if(!NetworkManager::getInstance().Init(serverNameStr))
+	IpAddr addrInfo;
+	if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, addrInfo))
 	{
+		printf("main GetConfigIpAddr error \n");
+		return false;
+	}
+
+	if(!NetworkManager::getInstance().Init(addrInfo))
+	{
+		printf("main NetworkManager Init error\n");
 		return 0;
+	}
+
+	if (!EpollThread::getInstance().Init())
+	{
+		printf("main EpollThread Init error\n");
+		return 0;
+	}
+
+	if(!EpollThread::getInstance().Start())
+	{
+		printf("main EpollThread Start error\n");
 	}
 
 	Service* pService = NetworkManager::getInstance().CreateService();
@@ -36,14 +56,22 @@ int main(int argc,char *argv[])
 		return 0;
 	}
 
-	pService->Start_epoll();
+	if(!EpollThread::getInstance().Attach(pService))
+	{
+		printf("main attack service error\n");
+		return 0;
+	}
+
+
+
+	//pService->Start_epoll();
 
 	//ServerVar& serverVar = ServerVar::getInstance();	
 
 	while (1)
 	{
 		usleep(10000);
-		pService->Process_epoll();
+		//pService->Process_epoll();
 	}
 
 	return 0;

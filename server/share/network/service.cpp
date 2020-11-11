@@ -139,7 +139,7 @@ void Service::Process()
     int32 acceptfd = accept(this->listenSocketfd, (struct sockaddr *)&remoteAddr, &structLen);
     if (acceptfd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
     {
-        //        
+        //
     }else
     {
         this->socketfdVec.push_back(acceptfd);

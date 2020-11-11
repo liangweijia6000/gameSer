@@ -4,6 +4,9 @@
 Try to create a online game framework
 
 TODO: <br>
+
+network first, protobuf reflect after
+
 &#8195;confg<br>
 &#8195;network<br>
 &#8195;log<br>

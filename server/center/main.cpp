@@ -18,10 +18,18 @@ int main()
 		return 0;
 	}
 
-	if(!NetworkManager::getInstance().Init(serverNameStr))
-    {
-        return 0;
-    }
+	IpAddr addrInfo;
+	if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, addrInfo))
+	{
+		printf("main GetConfigIpAddr error \n");
+		return 0;
+	}
+
+	if(!NetworkManager::getInstance().Init(addrInfo))
+	{
+		printf("main NetworkManager Init error\n");
+		return 0;
+	}
     
 	Service* pService = NetworkManager::getInstance().CreateService();
 	if (!pService)

@@ -19,12 +19,12 @@ public:
 	NetworkManager();
 	~NetworkManager();
 public:
-	bool Init(String serverName);
+	bool Init(IpAddr& in);
 	Service* CreateService();
 	Service* GetService();
 private:
 	IpAddr ipAddr;
-	Service* pService;
+	Service* pService;	//TODO:
 
 };
 
