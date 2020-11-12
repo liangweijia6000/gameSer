@@ -20,11 +20,11 @@ public:
 	~NetworkManager();
 public:
 	bool Init(IpAddr& in);
-	Service* CreateService();
+	bool Start();
 	Service* GetService();
 private:
-	IpAddr ipAddr;
-	Service* pService;	//TODO:
+	IpAddr _ipAddr;
+	Service* _pService;	//TODO:
 
 };
 

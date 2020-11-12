@@ -7,11 +7,11 @@ struct IpAddr;
 
 class Service
 {
-private:
-    /* data */
 public:
     Service(IpAddr ipAddr);
     ~Service();
+public:
+    static void Process_static();
 public:
     bool Start();
 
@@ -19,22 +19,21 @@ public:
 
     void Stop();
     void Reset(IpAddr ipAddr);
-    void Process();
 
-    void Process_epoll();
+    bool Process_epoll();
 
     void SendMsg(char* msg);
     bool IsRun();
 private:
 private:
-    String ip;
-    uint32 port;
-    int32 listenSocketfd;
-    Int32Vector socketfdVec;
-    bool isRun;
+    String _ip;
+    uint32 _port;
+    int32 _listenSocketfd;
+    Int32Vector _socketfdVec;
+    bool _isRun;
 
 private:
-    int32 epollfd = 0;
+    int32 _epollfd = 0;
 };
 
 #endif  //_SERVICE_H_

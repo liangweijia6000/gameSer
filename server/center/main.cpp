@@ -31,16 +31,9 @@ int main()
 		return 0;
 	}
     
-	Service* pService = NetworkManager::getInstance().CreateService();
-	if (!pService)
+	if (NetworkManager::getInstance().Start())
 	{
-		printf("main NetworkManager createService eroor \n");
-		return 0;
-	}
-
-	if(!pService->Start_epoll())
-	{
-		printf("main service start error\n");
+		printf("main NetworkManager Start eroor \n");
 		return 0;
 	}
 

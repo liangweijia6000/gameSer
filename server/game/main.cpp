@@ -38,40 +38,18 @@ int main(int argc,char *argv[])
 		return 0;
 	}
 
-	if (!EpollThread::getInstance().Init())
+	if (!NetworkManager::getInstance().Start())
 	{
-		printf("main EpollThread Init error\n");
+		printf("main NetworkManager Start error\n");
 		return 0;
-	}
-
-	if(!EpollThread::getInstance().Start())
-	{
-		printf("main EpollThread Start error\n");
-	}
-
-	Service* pService = NetworkManager::getInstance().CreateService();
-	if (!pService)
-	{
-		printf("main NetworkManager createService eroor \n");
-		return 0;
-	}
-
-	if(!EpollThread::getInstance().Attach(pService))
-	{
-		printf("main attack service error\n");
-		return 0;
-	}
-
-
-
-	//pService->Start_epoll();
-
-	//ServerVar& serverVar = ServerVar::getInstance();	
+	}	
 
 	while (1)
 	{
 		usleep(10000);
-		//pService->Process_epoll();
+		//Process();
+		printf("main loop 1\n");
+		break;
 	}
 
 	return 0;

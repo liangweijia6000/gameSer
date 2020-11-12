@@ -13,57 +13,55 @@
 
 Service::Service(IpAddr ipAddr)
 {
-    this->ip = ipAddr.ip;
-    this->port = ipAddr.port;
-    this->listenSocketfd = -1;
-    this->isRun = false;
+    //
 }
 
 Service::~Service()
 {
+    //
 }
 
 void Service::Reset(IpAddr ipAddr)
 {
-    this->ip = ipAddr.ip;
-    this->port = ipAddr.port;
-    this->listenSocketfd = -1;
+    _ip = ipAddr.ip;
+    _port = ipAddr.port;
+    _listenSocketfd = -1;
 }
 
 bool Service::Start()
 {
-    printf("Service::Start at ip:%s port:%d\n", this->ip.c_str(), this->port);
+    printf("Service::Start at ip:%s port:%d\n", _ip.c_str(), _port);
 
-    this->listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (this->listenSocketfd < 0)
+    _listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (_listenSocketfd < 0)
     {
         return false;
     }
 
-    int flags = fcntl(this->listenSocketfd, F_GETFL, 0);
-    fcntl(this->listenSocketfd, F_SETFL, flags | O_NONBLOCK);
+    int flags = fcntl(_listenSocketfd, F_GETFL, 0);
+    fcntl(_listenSocketfd, F_SETFL, flags | O_NONBLOCK);
 
     struct sockaddr_in sockaddr;
     memset(&sockaddr, 0, sizeof(sockaddr));
     sockaddr.sin_family = AF_INET;
-    sockaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr(this->ip.c_str());
-    sockaddr.sin_port = htons(this->port);
+    sockaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr(_ip.c_str());
+    sockaddr.sin_port = htons(_port);
 
-    int32 res = bind(this->listenSocketfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
+    int32 res = bind(_listenSocketfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
     if (res < 0)
     {
         printf("Service::Start bind error\n");
         return false;
     }
 
-    res = listen(this->listenSocketfd, 512);
+    res = listen(_listenSocketfd, 512);
     if (res < 0)
     {
         printf("Service::Start listen error\n");
         return false;
     }
 
-    this->isRun = true;
+    _isRun = true;
     
     return true;
 }
@@ -71,115 +69,78 @@ bool Service::Start()
 bool Service::Start_epoll()
 {
 
-    printf("Service::Start at ip:%s port:%d\n", this->ip.c_str(), this->port);
+    printf("Service::Start at ip:%s port:%d\n", _ip.c_str(), _port);
 
-    this->listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (this->listenSocketfd < 0)
+    _listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (_listenSocketfd < 0)
     {
         return false;
     }
 
-    int flags = fcntl(this->listenSocketfd, F_GETFL, 0);
-    fcntl(this->listenSocketfd, F_SETFL, flags | O_NONBLOCK);
+    int flags = fcntl(_listenSocketfd, F_GETFL, 0);
+    fcntl(_listenSocketfd, F_SETFL, flags | O_NONBLOCK);
 
     struct sockaddr_in sockaddr;
     memset(&sockaddr, 0, sizeof(sockaddr));
     sockaddr.sin_family = AF_INET;
-    sockaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr(this->ip.c_str());
-    sockaddr.sin_port = htons(this->port);
+    sockaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr(_ip.c_str());
+    sockaddr.sin_port = htons(_port);
 
-    int32 res = bind(this->listenSocketfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
+    int32 res = bind(_listenSocketfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
     if (res < 0)
     {
         printf("Service::Start bind error\n");
         return false;
     }
 
-    res = listen(this->listenSocketfd, 512);
+    res = listen(_listenSocketfd, 512);
     if (res < 0)
     {
         printf("Service::Start listen error\n");
         return false;
     }
 
-    this->epollfd = epoll_create(4096);
-    printf("Service::Start_epoll epollfd:%d\n", epollfd);
+    _epollfd = epoll_create(4096);
+    printf("Service::Start_epoll epollfd:%d\n", _epollfd);
 
     struct epoll_event ev;
 
-    ev.data.fd = this->listenSocketfd;
+    ev.data.fd = _listenSocketfd;
     ev.events = EPOLLIN|EPOLLET;
 
-    epoll_ctl(this->epollfd, EPOLL_CTL_ADD, listenSocketfd, &ev);
+    epoll_ctl(_epollfd, EPOLL_CTL_ADD, _listenSocketfd, &ev);
 
 
-    this->isRun = true;
+    _isRun = true;
 
     return true;
 }
 
 void Service::Stop()
 {
-    close(this->listenSocketfd);
-    for(auto it:this->socketfdVec)
+    close(_listenSocketfd);
+    for(auto it:_socketfdVec)
     {
         close(it);
     }
 
-    this->isRun =false;
+    _isRun =false;
 }
 
-void Service::Process()
+bool Service::Process_epoll()
 {
-    printf("Service::Process\n");
-    struct sockaddr_in remoteAddr;
-
-    uint32 structLen = sizeof(struct sockaddr);
-
-    int32 acceptfd = accept(this->listenSocketfd, (struct sockaddr *)&remoteAddr, &structLen);
-    if (acceptfd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+    if (!_isRun)
     {
-        //
-    }else
-    {
-        this->socketfdVec.push_back(acceptfd);
-    }
-
-    for (auto it = this->socketfdVec.begin(); it != this->socketfdVec.end(); ++it)
-    {
-        char buf[BUFSIZ];
-        memset(buf, 0, BUFSIZ);
-
-        int32 len = recv(*it, &buf, BUFSIZ, 0);
-        if ((len < 0 && errno != EWOULDBLOCK) || len == 0)
-        {
-            this->socketfdVec.erase(it);
-            it--;
-            continue;
-        }
-
-        //InitMsgA2C tempmsg;
-        //tempmsg.ParseFromString(buf);
-
-        //printf("Service::Process recv len:%d\n", len);
-
-        //printf("Service::Process recv:%d \n", tempmsg.times());
-        //printf("Service::Process recv:%s \n", tempmsg.name().c_str());
-
-        //printf("Service::Process recv:%s \n", buf);
-    }
-}
-
-void Service::Process_epoll()
-{
-    if (!this->isRun)
-    {
-        return;
+        return false;
     }
 
     struct epoll_event events[256];
 
-    int32 nfds = epoll_wait(this->epollfd, events, 256, 500);
+    int32 nfds = epoll_wait(_epollfd, events, 256, 500);
+    if (nfds < 0)
+    {
+        return false;
+    }    
 
     printf("Process_epoll nfds:%d\n", nfds);
 
@@ -192,11 +153,11 @@ void Service::Process_epoll()
             continue;
         }        
 
-        if (eventfd == this->listenSocketfd)
+        if (eventfd == _listenSocketfd)
         {
             struct sockaddr_in remoteAddr;
             uint32 structLen = sizeof(struct sockaddr);
-            int32 acceptfd = accept(this->listenSocketfd, (struct sockaddr *)&remoteAddr, &structLen);
+            int32 acceptfd = accept(_listenSocketfd, (struct sockaddr *)&remoteAddr, &structLen);
             if (acceptfd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
             {
                 //        
@@ -205,7 +166,7 @@ void Service::Process_epoll()
                 struct epoll_event ev;
                 ev.data.fd = acceptfd;
                 ev.events = EPOLLIN | EPOLLET;
-                epoll_ctl(this->epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
+                epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
             }
 
             continue;
@@ -231,13 +192,15 @@ void Service::Process_epoll()
                 continue;
             }
 
-            printf("read buf:%s", buf);            
+            printf("read buf:%s", buf);
             
         }else if (events[i].events & EPOLLOUT)
         {
             //
         }        
-    }    
+    }
+
+    return true;
 }
 
 
@@ -248,11 +211,11 @@ void Service::SendMsg(char* msg)
         return;
     }
     
-    //send(this->socketfd, msg, sizeof(*msg), 0);
+    //send(_socketfd, msg, sizeof(*msg), 0);
 }
 
 bool Service::IsRun()
 {
-    return this->isRun;
+    return _isRun;
 }
 

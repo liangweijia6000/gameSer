@@ -1,11 +1,12 @@
 #include <sys/socket.h>
 #include "networkmanager.h"
 #include "config/configmanager.h"
+#include "epollthread.h"
 
 SINGLETON_DEFINITION(NetworkManager)
 
 NetworkManager::NetworkManager()
-    : pService(NULL)
+    : _pService(NULL)
 {
 }
 
@@ -16,30 +17,50 @@ NetworkManager::~NetworkManager()
 
 bool NetworkManager::Init(IpAddr& in)
 {
-    this->ipAddr.ip = in.ip;
-    this->ipAddr.port = in.port;
+    _ipAddr.ip = in.ip;
+    _ipAddr.port = in.port;
 
-    printf("NetworkManager::Init ip:%s port:%d \n", this->ipAddr.ip.c_str(), this->ipAddr.port);
+    printf("NetworkManager::Init ip:%s port:%d \n", _ipAddr.ip.c_str(), _ipAddr.port);
+
+    if (_pService == NULL)
+    {
+        _pService = new Service(_ipAddr);
+    }else
+    {
+        _pService->Reset(_ipAddr);
+    }
+
+    if (!EpollThread::getInstance().Init(_pService))
+    {
+        return false;
+    }
+
     return true;
 }
 
-Service* NetworkManager::CreateService()
+bool NetworkManager::Start()
 {
-    printf("NetworkManager::CreateService\n");
-    if (this->pService == NULL)
+    if (!_pService->Start())
     {
-        this->pService = new Service(this->ipAddr);
-    }else
+        return false;
+    }
+
+    if (!_pService->Start_epoll())
     {
-        this->pService->Reset(this->ipAddr);
-    }   
+        return false;
+    }
     
-    return this->pService;
+    if (!EpollThread::getInstance().Start())
+    {
+        return false;
+    }    
+
+    return true;
 }
 
 Service* NetworkManager::GetService()
 {
-    return this->pService;
+    return _pService;
 }
 
 
