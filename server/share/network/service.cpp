@@ -103,9 +103,11 @@ bool Service::Start_epoll()
     _epollfd = epoll_create(4096);
     printf("Service::Start_epoll epollfd:%d\n", _epollfd);
 
-    struct epoll_event ev;
+    EpollData* pEpolldata = new EpollData();
+    pEpolldata->type = EpollType_listen;
 
-    ev.data.fd = _listenSocketfd;
+    struct epoll_event ev;
+    ev.data.ptr = pEpolldata;
     ev.events = EPOLLIN|EPOLLET;
 
     epoll_ctl(_epollfd, EPOLL_CTL_ADD, _listenSocketfd, &ev);
@@ -146,6 +148,9 @@ bool Service::Process_epoll()
 
     for (int32 i = 0; i < nfds; i++)
     {
+        EpollData* pEpollData = (EpollData*)events[i].data.ptr;
+
+        /*
         int32 eventfd = events[i].data.fd;
         if (eventfd < 0)
         {
@@ -163,10 +168,10 @@ bool Service::Process_epoll()
                 //        
             }else
             {
-                struct epoll_event ev;
-                ev.data.fd = acceptfd;
-                ev.events = EPOLLIN | EPOLLET;
-                epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
+                //struct epoll_event ev;
+                //ev.data.fd = acceptfd;
+                //ev.events = EPOLLIN | EPOLLET;
+                //epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
             }
 
             continue;
@@ -197,7 +202,8 @@ bool Service::Process_epoll()
         }else if (events[i].events & EPOLLOUT)
         {
             //
-        }        
+        }
+        */       
     }
 
     return true;

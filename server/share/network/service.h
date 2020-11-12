@@ -3,6 +3,22 @@
 
 #include "common/servercommon.h"
 
+struct EpollData
+{
+    EpollData()
+    : type(0)
+    , ptr(NULL)
+    {}
+    uint32 type;
+    void*  ptr;
+};
+
+enum EpollType
+{
+    EpollType_listen = 1,
+};
+
+
 struct IpAddr;
 
 class Service
