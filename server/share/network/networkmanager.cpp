@@ -42,16 +42,13 @@ bool NetworkManager::Start()
 {
     if (!_pService->Start())
     {
-        return false;
-    }
-
-    if (!_pService->Start_epoll())
-    {
+        printf("NetworkManager::Start !_pService->Start() \n");
         return false;
     }
     
     if (!EpollThread::getInstance().Start())
     {
+        printf("NetworkManager::Start !EpollThread::getInstance().Start() \n");
         return false;
     }    
 

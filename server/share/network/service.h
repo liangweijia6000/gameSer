@@ -31,8 +31,6 @@ public:
 public:
     bool Start();
 
-    bool Start_epoll();
-
     void Stop();
     void Reset(IpAddr ipAddr);
 

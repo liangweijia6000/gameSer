@@ -31,9 +31,9 @@ int main()
 		return 0;
 	}
     
-	if (NetworkManager::getInstance().Start())
+	if (!NetworkManager::getInstance().Start())
 	{
-		printf("main NetworkManager Start eroor \n");
+		printf("main NetworkManager Start error \n");
 		return 0;
 	}
 
@@ -41,6 +41,8 @@ int main()
 	{
 		usleep(10000);
 		//pService->Process();
+		printf("center main thread loop 1\n");
+		break;
 	}
 	
 	return 0;

@@ -10,8 +10,6 @@ import (
 	//"log"
 )
 
-//gameclient used to connect to the game server
-
 //GameClinet client info of connection
 type GameClinet struct {
 	ip   string

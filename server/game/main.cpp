@@ -29,7 +29,7 @@ int main(int argc,char *argv[])
 	if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, addrInfo))
 	{
 		printf("main GetConfigIpAddr error \n");
-		return false;
+		return 0;
 	}
 
 	if(!NetworkManager::getInstance().Init(addrInfo))

@@ -13,7 +13,9 @@
 
 Service::Service(IpAddr ipAddr)
 {
-    //
+    _ip = ipAddr.ip;
+    _port = ipAddr.port;
+    _listenSocketfd = -1;
 }
 
 Service::~Service()
@@ -29,44 +31,6 @@ void Service::Reset(IpAddr ipAddr)
 }
 
 bool Service::Start()
-{
-    printf("Service::Start at ip:%s port:%d\n", _ip.c_str(), _port);
-
-    _listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (_listenSocketfd < 0)
-    {
-        return false;
-    }
-
-    int flags = fcntl(_listenSocketfd, F_GETFL, 0);
-    fcntl(_listenSocketfd, F_SETFL, flags | O_NONBLOCK);
-
-    struct sockaddr_in sockaddr;
-    memset(&sockaddr, 0, sizeof(sockaddr));
-    sockaddr.sin_family = AF_INET;
-    sockaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr(_ip.c_str());
-    sockaddr.sin_port = htons(_port);
-
-    int32 res = bind(_listenSocketfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
-    if (res < 0)
-    {
-        printf("Service::Start bind error\n");
-        return false;
-    }
-
-    res = listen(_listenSocketfd, 512);
-    if (res < 0)
-    {
-        printf("Service::Start listen error\n");
-        return false;
-    }
-
-    _isRun = true;
-    
-    return true;
-}
-
-bool Service::Start_epoll()
 {
 
     printf("Service::Start at ip:%s port:%d\n", _ip.c_str(), _port);

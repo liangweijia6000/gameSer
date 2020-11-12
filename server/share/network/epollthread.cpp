@@ -12,7 +12,7 @@ EpollThread::~EpollThread()
 
 bool EpollThread::Init(Service* pService)
 {
-    printf("EpollThread Init");
+    printf("EpollThread Init\n");
 
     _pService = pService;
 
@@ -23,9 +23,9 @@ bool EpollThread::Start()
 {
     printf("EpollThread Start\n");
 
-
     if (0 != pthread_create(&_thread_id, NULL, (void *(*)(void *))(_thread_func_static), this))
 	{
+        printf("pthread_create error\n");
 		return false;
 	}
     
