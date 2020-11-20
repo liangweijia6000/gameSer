@@ -7,15 +7,22 @@ struct EpollData
 {
     EpollData()
     : type(0)
-    , ptr(NULL)
+    , fd(0)
     {}
+
+    void Release()
+    {
+        delete this;
+    }
+
     uint32 type;
-    void*  ptr;
+    uint32 fd;
 };
 
 enum EpollType
 {
     EpollType_listen = 1,
+    EpollType_sock = 2,
 };
 
 

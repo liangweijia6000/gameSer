@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <unistd.h>
 #include "common/servercommon.h"
 #include "servervar/servervar.h"
 #include "config/configmanager.h"
@@ -39,10 +38,10 @@ int main()
 
 	while (1)
 	{
-		usleep(10000);
+		usleep(100000);
 		//pService->Process();
-		printf("center main thread loop 1\n");
-		break;
+		//printf("center main thread loop 1\n");
+		//break;
 	}
 	
 	return 0;

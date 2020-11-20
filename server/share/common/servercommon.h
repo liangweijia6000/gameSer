@@ -10,6 +10,8 @@
 
 #include <cstring>
 
+#include <unistd.h>
+
 #ifdef _WIN32
 typedef char char8;  
 typedef unsigned short char16;
@@ -96,7 +98,7 @@ typedef std::map<int64,Int32Int32Map> Int64Int32Int32Map;
 typedef std::map<int32,Int32Int32Map> Int32Int32Int32Map;
 typedef std::map<int32,Int64Int32Map> Int32Int64Int32Map;
 
-typedef std::map<int64,Int32Vector> Int64_Int32VectorMap;
+typedef std::map<int64,Int32Vector> Int64Int32VectorMap;
 typedef std::map<int32, Int32Vector> Int32VectorMap;
 typedef std::vector<byte8> Byte8Vector;
 typedef std::vector<int16> Int16Vector;

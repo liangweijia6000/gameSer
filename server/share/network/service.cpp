@@ -72,7 +72,7 @@ bool Service::Start()
 
     struct epoll_event ev;
     ev.data.ptr = pEpolldata;
-    ev.events = EPOLLIN|EPOLLET;
+    ev.events = EPOLLIN;
 
     epoll_ctl(_epollfd, EPOLL_CTL_ADD, _listenSocketfd, &ev);
 
@@ -102,27 +102,27 @@ bool Service::Process_epoll()
 
     struct epoll_event events[256];
 
-    int32 nfds = epoll_wait(_epollfd, events, 256, 500);
+    int32 nfds = epoll_wait(_epollfd, events, 256, 1);
     if (nfds < 0)
     {
         return false;
     }    
 
-    printf("Process_epoll nfds:%d\n", nfds);
+    if(nfds != 0)
+    {
+        printf("Process_epoll nfds:%d\n", nfds);
+    }
 
     for (int32 i = 0; i < nfds; i++)
     {
         EpollData* pEpollData = (EpollData*)events[i].data.ptr;
 
-        /*
-        int32 eventfd = events[i].data.fd;
-        if (eventfd < 0)
+        if (pEpollData == NULL)
         {
-            printf("eventfd < 0 \n");
             continue;
         }        
 
-        if (eventfd == _listenSocketfd)
+        if (pEpollData->type == EpollType_listen)
         {
             struct sockaddr_in remoteAddr;
             uint32 structLen = sizeof(struct sockaddr);
@@ -132,10 +132,15 @@ bool Service::Process_epoll()
                 //        
             }else
             {
-                //struct epoll_event ev;
-                //ev.data.fd = acceptfd;
-                //ev.events = EPOLLIN | EPOLLET;
-                //epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
+                EpollData* pEpolldata = new EpollData();
+                pEpolldata->type = EpollType_sock;
+                pEpollData->fd = acceptfd;
+
+                struct epoll_event ev;
+                ev.data.ptr = pEpolldata;
+                ev.events = EPOLLIN;
+
+                epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
             }
 
             continue;
@@ -145,19 +150,21 @@ bool Service::Process_epoll()
         {
             char buf[BUFSIZ];
             memset(buf, 0, BUFSIZ);
-            int32 readSize = read(eventfd, buf, BUFSIZ);
+            int32 readSize = read(pEpollData->fd, buf, BUFSIZ);
             if (readSize < 0)
             {
                 if (errno == ECONNRESET)
                 {
-                    close(eventfd);
-                    events[i].data.fd = -1;
+                    close(pEpollData->fd);
+                    events[i].data.ptr = NULL;
+                    pEpollData->Release();
                     continue;
                 }    
             }else if (readSize == 0)
             {
-                close(eventfd);
-                events[i].data.fd = -1;
+                close(pEpollData->fd);
+                events[i].data.ptr = NULL;
+                pEpollData->Release();
                 continue;
             }
 
@@ -166,8 +173,7 @@ bool Service::Process_epoll()
         }else if (events[i].events & EPOLLOUT)
         {
             //
-        }
-        */       
+        }    
     }
 
     return true;
