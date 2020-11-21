@@ -10,7 +10,9 @@
 
 #include <cstring>
 
+#ifdef __linux__
 #include <unistd.h>
+#endif //__linux__
 
 #ifdef _WIN32
 typedef char char8;  

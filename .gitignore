@@ -20,3 +20,4 @@ msghandle.h
 server/tools/cpp/msghandle/*
 .vscode/
 *.a
+vs2013
