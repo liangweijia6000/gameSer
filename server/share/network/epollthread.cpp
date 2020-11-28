@@ -23,11 +23,13 @@ bool EpollThread::Start()
 {
     printf("EpollThread Start\n");
 
+#ifdef __linux__
     if (0 != pthread_create(&_thread_id, NULL, (void *(*)(void *))(_thread_func_static), this))
 	{
         printf("pthread_create error\n");
 		return false;
 	}
+#endif //__linux__
     
     return true;
 }

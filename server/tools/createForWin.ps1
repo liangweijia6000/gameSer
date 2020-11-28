@@ -20,7 +20,7 @@ rm ..\share\protocol\*
 
 Get-ChildItem .\protobuf\ | ForEach-Object -Process{
     Write-Host -NoNewline "-- Processing $_ ... "
-    ..\..\lib3rd\protoc-3.14.0-win64\bin\protoc.exe --proto_path=./protobuf/ --cpp_out=./cppTarget/ $_.name
+    ..\..\lib3rd\protobuf-3.14.0\bin\protoc.exe --proto_path=./protobuf/ --cpp_out=./cppTarget/ $_.name
     Write-Host "Done"
 }
 

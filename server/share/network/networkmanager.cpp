@@ -1,4 +1,7 @@
+#ifdef __linux__
 #include <sys/socket.h>
+#endif //__linux__
+
 #include "networkmanager.h"
 #include "config/configmanager.h"
 #include "epollthread.h"

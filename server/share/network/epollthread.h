@@ -18,7 +18,9 @@ private:
 private:
 	static void* _thread_func_static(void* arge);
 private:
+#ifdef __linux__
 	pthread_t _thread_id = 0;
+#endif //__linux__
 	Service* _pService = NULL;
 };
 

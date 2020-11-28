@@ -1,14 +1,14 @@
-
+#ifdef __linux__
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <unistd.h>
+#endif //__linux__
+
 #include <sys/types.h>
 #include <fcntl.h>
-#include <unistd.h>
 #include <errno.h>
-
 #include "service.h"
 #include "networkmanager.h"
-
 #include "protocol/protocol.pb.h"
 
 Service::Service(IpAddr ipAddr)
@@ -35,6 +35,7 @@ bool Service::Start()
 
     printf("Service::Start at ip:%s port:%d\n", _ip.c_str(), _port);
 
+#ifdef __linux__
     _listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (_listenSocketfd < 0)
     {
@@ -78,12 +79,14 @@ bool Service::Start()
 
 
     _isRun = true;
+#endif //__linux__
 
     return true;
 }
 
 void Service::Stop()
 {
+#ifdef __linux__
     close(_listenSocketfd);
     for(auto it:_socketfdVec)
     {
@@ -91,6 +94,7 @@ void Service::Stop()
     }
 
     _isRun =false;
+#endif //__linux__
 }
 
 bool Service::Process_epoll()
@@ -100,6 +104,7 @@ bool Service::Process_epoll()
         return false;
     }
 
+#ifdef __linux__
     struct epoll_event events[256];
 
     int32 nfds = epoll_wait(_epollfd, events, 256, 1);
@@ -175,6 +180,7 @@ bool Service::Process_epoll()
             //
         }    
     }
+#endif //__linux__
 
     return true;
 }
