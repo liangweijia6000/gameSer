@@ -14,6 +14,7 @@
 #include <unistd.h>
 #endif //__linux__
 
+
 #ifdef _WIN32
 typedef char char8;  
 typedef unsigned short char16;
@@ -105,8 +106,6 @@ typedef std::map<int32, Int32Vector> Int32VectorMap;
 typedef std::vector<byte8> Byte8Vector;
 typedef std::vector<int16> Int16Vector;
 typedef std::vector<bool> BoolVector;
-
-
 
 #define FOR_I_INT(size) for (int_32 i = 0; i < size; i++)
 #define FOR_I_UINT(size) for (uint_32 i = 0; i < size; i++)

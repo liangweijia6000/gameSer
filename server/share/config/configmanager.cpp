@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <fstream>
 
+#include "commoninclude.h"
 #include "configmanager.h"
 #include "network/networkmanager.h"
 
@@ -16,7 +17,7 @@ ConfigManager::~ConfigManager()
 
 bool ConfigManager::Init()
 {
-	printf("ConfigManager::Init\n");
+	LOG_DEBUG("ConfigManager::Init");
 	if (!LoadConfig(INI_PATH))
 	{
 		return false;
@@ -66,7 +67,7 @@ bool ConfigManager::GetConfigIpAddr(String section, IpAddr &ipAddr)
 
 bool ConfigManager::LoadConfig(String path)
 {
-	printf("ConfigManager::LoadConfig\n");
+	LOG_DEBUG("ConfigManager::LoadConfig");
 
 	std::ifstream fileStream(path.c_str());
 

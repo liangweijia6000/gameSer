@@ -2,7 +2,7 @@
 #define _A_NETWORK_MANAGER_H_
 
 #include "network/networkmanager.h"
-#include "common/servercommon.h"
+#include "commoninclude.h"
 
 class  ANetworkManager
 {

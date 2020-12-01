@@ -33,7 +33,7 @@ void Service::Reset(IpAddr ipAddr)
 bool Service::Start()
 {
 
-    printf("Service::Start at ip:%s port:%d\n", _ip.c_str(), _port);
+    LOG_DEBUG("Service::Start at ip:%s port:%d", _ip.c_str(), _port);
 
 #ifdef __linux__
     _listenSocketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -54,19 +54,19 @@ bool Service::Start()
     int32 res = bind(_listenSocketfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
     if (res < 0)
     {
-        printf("Service::Start bind error\n");
+        LOG_ERROR("Service::Start bind error");
         return false;
     }
 
     res = listen(_listenSocketfd, 512);
     if (res < 0)
     {
-        printf("Service::Start listen error\n");
+        LOG_ERROR("Service::Start listen error");
         return false;
     }
 
     _epollfd = epoll_create(4096);
-    printf("Service::Start_epoll epollfd:%d\n", _epollfd);
+    LOG_DEBUG("Service::Start_epoll epollfd:%d", _epollfd);
 
     EpollData* pEpolldata = new EpollData();
     pEpolldata->type = EpollType_listen;
@@ -115,7 +115,7 @@ bool Service::Process_epoll()
 
     if(nfds != 0)
     {
-        printf("Process_epoll nfds:%d\n", nfds);
+        LOG_DEBUG("Process_epoll nfds:%d", nfds);
     }
 
     for (int32 i = 0; i < nfds; i++)
@@ -173,7 +173,7 @@ bool Service::Process_epoll()
                 continue;
             }
 
-            printf("read buf:%s", buf);
+            LOG_DEBUG("read buf:%s", buf);
             
         }else if (events[i].events & EPOLLOUT)
         {

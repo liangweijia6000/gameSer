@@ -1,7 +1,7 @@
 #ifndef _SERVICE_H_
 #define _SERVICE_H_
 
-#include "common/servercommon.h"
+#include "commoninclude.h"
 
 struct EpollData
 {

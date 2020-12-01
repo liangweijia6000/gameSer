@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "common/servercommon.h"
+#include "commoninclude.h"
 #include "servervar/servervar.h"
 #include "config/configmanager.h"
 #include "protocol/protocol.pb.h"
@@ -9,39 +9,38 @@ int main()
 {
 	String serverNameStr = "center";
 
-	printf("Server %s running\n", serverNameStr.c_str());
+	LOG_INFO("Server %s running\n", serverNameStr.c_str());
 
 	if (!ConfigManager::getInstance().Init())
 	{
-		printf("main ConfigManager Init error \n");
+		LOG_ERROR("main ConfigManager Init error");
 		return 0;
 	}
 
 	IpAddr addrInfo;
 	if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, addrInfo))
 	{
-		printf("main GetConfigIpAddr error \n");
+		LOG_ERROR("main GetConfigIpAddr error");
 		return 0;
 	}
 
 	if(!NetworkManager::getInstance().Init(addrInfo))
 	{
-		printf("main NetworkManager Init error\n");
+		LOG_ERROR("main NetworkManager Init error");
 		return 0;
 	}
     
 	if (!NetworkManager::getInstance().Start())
 	{
-		printf("main NetworkManager Start error \n");
+		LOG_ERROR("main NetworkManager Start error");
 		return 0;
 	}
 
 	while (1)
 	{
-		usleep(100000);
-		//pService->Process();
-		//printf("center main thread loop 1\n");
-		//break;
+		usleep(1000000);
+		uint32 time = TimeManager::TimeStamp();
+		LOG_WARN("main loop time:%u", time);
 	}
 	
 	return 0;

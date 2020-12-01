@@ -1,7 +1,7 @@
 #ifndef _SERVERVAR_H_
 #define _SERVERVAR_H_
 
-#include <common/servercommon.h>
+#include "commoninclude.h"
 
 class ServerVar
 {

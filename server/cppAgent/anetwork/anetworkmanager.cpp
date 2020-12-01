@@ -18,15 +18,12 @@ bool ANetworkManager::start(String serverNameStr)
     IpAddr ipAddr;
     if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, ipAddr))
 	{
-		printf("NetworkManager::Init GetConfigIpAddr error \n");
+		LOG_ERROR("NetworkManager::Init GetConfigIpAddr error");
 		return false;
 	}
 
-    printf("ANetworkManager::start ipAddr.ip:%s\n", ipAddr.ip.c_str());
-    printf("ANetworkManager::start ipAddr.port:%d\n", ipAddr.port);
-
-
-    
+    LOG_DEBUG("ANetworkManager::start ipAddr.ip:%s", ipAddr.ip.c_str());
+    LOG_DEBUG("ANetworkManager::start ipAddr.port:%d", ipAddr.port);    
 
     return true;
 }

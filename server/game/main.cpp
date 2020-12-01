@@ -11,36 +11,36 @@ int main(int argc,char *argv[])
 {
 	if(argc != 2)
 	{
-		printf("main() argc error \n");
+		LOG_ERROR("main() argc error");
 		return 0;
 	}
 
 	String serverNameStr = "game" + String(argv[1]);
 
-	printf("Server %s running\n", serverNameStr.c_str());
+	LOG_DEBUG("Server %s running", serverNameStr.c_str());
 
 	if (!ConfigManager::getInstance().Init())
 	{
-		printf("main ConfigManager Init error \n");
+		LOG_ERROR("main ConfigManager Init error");
 		return 0;
 	}
 
 	IpAddr addrInfo;
 	if (!ConfigManager::getInstance().GetConfigIpAddr(serverNameStr, addrInfo))
 	{
-		printf("main GetConfigIpAddr error \n");
+		LOG_ERROR("main GetConfigIpAddr error");
 		return 0;
 	}
 
 	if(!NetworkManager::getInstance().Init(addrInfo))
 	{
-		printf("main NetworkManager Init error\n");
+		LOG_ERROR("main NetworkManager Init error");
 		return 0;
 	}
 
 	if (!NetworkManager::getInstance().Start())
 	{
-		printf("main NetworkManager Start error\n");
+		LOG_ERROR("main NetworkManager Start error");
 		return 0;
 	}	
 
@@ -48,7 +48,7 @@ int main(int argc,char *argv[])
 	{
 		usleep(10000);
 		//Process();
-		printf("main loop 1\n");
+		LOG_DEBUG("main loop 1");
 		break;
 	}
 

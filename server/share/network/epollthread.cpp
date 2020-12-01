@@ -12,7 +12,7 @@ EpollThread::~EpollThread()
 
 bool EpollThread::Init(Service* pService)
 {
-    printf("EpollThread Init\n");
+    LOG_DEBUG("EpollThread Init");
 
     _pService = pService;
 
@@ -21,12 +21,12 @@ bool EpollThread::Init(Service* pService)
 
 bool EpollThread::Start()
 {
-    printf("EpollThread Start\n");
+    LOG_DEBUG("EpollThread Start");
 
 #ifdef __linux__
     if (0 != pthread_create(&_thread_id, NULL, (void *(*)(void *))(_thread_func_static), this))
 	{
-        printf("pthread_create error\n");
+        LOG_DEBUG("pthread_create error");
 		return false;
 	}
 #endif //__linux__
@@ -48,14 +48,14 @@ void* EpollThread::_thread_func_static(void* arg)
 
 bool EpollThread::_main_loop()
 {
-    printf("EpollThread _main_loop\n");
+    LOG_ERROR("EpollThread _main_loop");
 
     while (true)
     {
         static uint32 a = 0;
         if (a%500 == 0)
         {
-            printf("EpollThread _main_loop %d\n", a/500);
+            LOG_DEBUG("EpollThread _main_loop %d", a/500);
         }
 
         if (!_pService->Process_epoll())

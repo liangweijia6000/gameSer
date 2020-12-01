@@ -11,7 +11,7 @@ int main(int argc,char *argv[])
 {
     if(argc != 2)
 	{
-		printf("main() argc error \n");
+		LOG_ERROR("main() argc error");
 		return 0;
 	}
 
@@ -19,12 +19,13 @@ int main(int argc,char *argv[])
 
     if (!ConfigManager::getInstance().Init())
 	{
-		printf("main ConfigManager Init error \n");
+		LOG_ERROR("main ConfigManager Init error");
 		return 0;
 	}
     
 	if(!ANetworkManager::getInstance().start(serverNameStr))
     {
+		LOG_ERROR("main ANetworkManager start error");
         return 0;
     }  
 

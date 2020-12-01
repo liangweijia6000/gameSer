@@ -1,7 +1,8 @@
 #ifndef _EPOLL_THREAD_H_
 #define _EPOLL_THREAD_H_
 
-#include "common/servercommon.h"
+//#include "common/servercommon.h"
+#include "commoninclude.h"
 #include "service.h"
 
 class EpollThread

@@ -24,8 +24,4 @@ private:
 };
 
 
-
-
-
-
 #endif //_CONFIG_MANAGER_H_
