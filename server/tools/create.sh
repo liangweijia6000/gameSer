@@ -98,12 +98,21 @@ do
 			fi
 
 			#for enum
-			echo "	E"$messagename"," >> temp.enum.include
+			#protocolEnumNum=1
+			#echo "	E"$messagename" = "$protocolEnumNum"," >> temp.enum.include
+			#protocolEnumNum=`expr $protocolEnumNum + 1`
 
 						
 		fi
 	done < $file
 done
+
+python ./tool.py CreateEnum
+
+if [ ! $? == 0 ]; then
+	echo -e "\033[31m\033[1mNG! Proccess Stop\033[0m"
+	exit 1
+fi
 
 echo "};" >> temp.enum.include
 echo "" >> temp.enum.include
@@ -136,13 +145,13 @@ cat ./temp.center.include >> ./centerMsgHandle.h
 cat ./protocol_include/handle.foot.include >> ./gameMsgHandle.h
 cat ./protocol_include/handle.foot.include >> ./centerMsgHandle.h
 
+echo -e "\033[32m\033[1mDone\033[0m"
+
 rm ./temp.*
 
 mv ./protocol.pb.h ./cpp/protocol/
 mv ./gameMsgHandle.h ./cpp/msghandle/
 mv ./centerMsgHandle.h ./cpp/msghandle/
-
-echo -e "\033[32m\033[1mDone\033[0m"
 
 echo -e "\033[32m\033[1m""-- Copy to server common workspace ...\033[0m \c"
 cp ./cpp/protocol/* ../share/protocol/ -rf

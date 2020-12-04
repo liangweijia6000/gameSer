@@ -25,12 +25,18 @@ bool NetworkManager::Init(IpAddr& in)
 
     LOG_DEBUG("NetworkManager::Init ip:%s port:%d", _ipAddr.ip.c_str(), _ipAddr.port);
 
-    if (_pService == NULL)
+    if (_pService != NULL)
     {
-        _pService = new Service(_ipAddr);
-    }else
+        LOG_ERROR("NetworkManager::Init _pService != NULL");
+        return false;
+    }
+
+    _pService = new Service(_ipAddr);
+
+    if (!_pService->Init())
     {
-        _pService->Reset(_ipAddr);
+        LOG_ERROR("NetworkManager::Init !_pService->Start()");
+        return false;
     }
 
     if (!EpollThread::getInstance().Init(_pService))
@@ -42,13 +48,7 @@ bool NetworkManager::Init(IpAddr& in)
 }
 
 bool NetworkManager::Start()
-{
-    if (!_pService->Start())
-    {
-        LOG_ERROR("NetworkManager::Start !_pService->Start()");
-        return false;
-    }
-    
+{    
     if (!EpollThread::getInstance().Start())
     {
         LOG_ERROR("NetworkManager::Start !EpollThread::getInstance().Start()");

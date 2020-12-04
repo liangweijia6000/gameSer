@@ -36,14 +36,14 @@ public:
 public:
     static void Process_static();
 public:
-    bool Start();
+    bool Init();
 
-    void Stop();
-    void Reset(IpAddr ipAddr);
+    //void Stop();
+    //void Reset(IpAddr ipAddr);
 
     bool Process_epoll();
 
-    void SendMsg(char* msg);
+    //void SendMsg(char* msg);
     bool IsRun();
 private:
 private:

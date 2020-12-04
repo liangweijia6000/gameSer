@@ -12,10 +12,10 @@
 #include "protocol/protocol.pb.h"
 
 Service::Service(IpAddr ipAddr)
+    : _ip(ipAddr.ip)
+    , _port(ipAddr.port)
+    , _listenSocketfd(-1)
 {
-    _ip = ipAddr.ip;
-    _port = ipAddr.port;
-    _listenSocketfd = -1;
 }
 
 Service::~Service()
@@ -23,14 +23,7 @@ Service::~Service()
     //
 }
 
-void Service::Reset(IpAddr ipAddr)
-{
-    _ip = ipAddr.ip;
-    _port = ipAddr.port;
-    _listenSocketfd = -1;
-}
-
-bool Service::Start()
+bool Service::Init()
 {
 
     LOG_DEBUG("Service::Start at ip:%s port:%d", _ip.c_str(), _port);
@@ -84,6 +77,7 @@ bool Service::Start()
     return true;
 }
 
+/*
 void Service::Stop()
 {
 #ifdef __linux__
@@ -96,6 +90,7 @@ void Service::Stop()
     _isRun =false;
 #endif //__linux__
 }
+*/
 
 bool Service::Process_epoll()
 {
@@ -185,7 +180,7 @@ bool Service::Process_epoll()
     return true;
 }
 
-
+/*
 void Service::SendMsg(char* msg)
 {
     if (!IsRun())
@@ -195,6 +190,7 @@ void Service::SendMsg(char* msg)
     
     //send(_socketfd, msg, sizeof(*msg), 0);
 }
+*/
 
 bool Service::IsRun()
 {

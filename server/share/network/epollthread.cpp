@@ -34,7 +34,7 @@ bool EpollThread::Start()
     return true;
 }
 
-void* EpollThread::_thread_func_static(void* arg)
+void* EpollThread::_thread_func_static(void* arg)   //static
 {
     EpollThread* pEpollThread = (EpollThread*)arg;
 

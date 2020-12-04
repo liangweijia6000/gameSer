@@ -9,7 +9,7 @@ int main()
 {
 	String serverNameStr = "center";
 
-	LOG_INFO("Server %s running\n", serverNameStr.c_str());
+	LOG_INFO("Server %s running", serverNameStr.c_str());
 
 	if (!ConfigManager::getInstance().Init())
 	{
