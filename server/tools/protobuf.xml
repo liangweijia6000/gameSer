@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <application project="protobuf">
-    <protobuf name="" id="1"/>
+    <protobuf name="LoginReqC2A" id="1"/>
+    <protobuf name="LoginAckA2C" id="2"/>
+    <protobuf name="InitMsgA2C" id="101"/>
+    <protobuf name="InitMsgC2M" id="102"/>
 </application>
