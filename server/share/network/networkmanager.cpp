@@ -8,6 +8,8 @@
 
 SINGLETON_DEFINITION(NetworkManager)
 
+#define NETWORK_MANAGER_PIPE_SIZE 1024*1024
+
 NetworkManager::NetworkManager()
     : _pService(NULL)
 {
@@ -30,6 +32,11 @@ bool NetworkManager::Init(IpAddr& in)
         LOG_ERROR("NetworkManager::Init _pService != NULL");
         return false;
     }
+
+    if (!_pipe.init(NETWORK_MANAGER_PIPE_SIZE))
+    {
+        return false;
+    }    
 
     _pService = new Service(_ipAddr);
 

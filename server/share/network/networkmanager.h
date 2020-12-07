@@ -7,11 +7,18 @@
 
 #include "common/servercommon.h"
 #include "service.h"
+#include "memorypipe.h"
 
 struct IpAddr
 {
 	String ip;
 	uint32 port;
+};
+
+struct MsgEvent
+{
+	uint32 id;
+	uint32 msglen;
 };
 
 class NetworkManager
@@ -28,6 +35,7 @@ private:
 	IpAddr _ipAddr;
 	Service* _pService;	//TODO:
 
+	MemoryPipe _pipe;
 };
 
 
