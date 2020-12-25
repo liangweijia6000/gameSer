@@ -17,9 +17,21 @@ struct IpAddr
 
 struct MsgEvent
 {
+	uint32 type;
 	uint32 id;
 	uint32 msglen;
 };
+
+struct CtrlEvent
+{
+	enum CtrlEventType
+	{
+		CtrlEventType_AddListen = 1,
+	};
+	uint32 type;
+	uint32 socketfd;
+};
+
 
 class NetworkManager
 {
@@ -30,12 +42,19 @@ public:
 public:
 	bool Init(IpAddr& in);
 	bool Start();
-	Service* GetService();
+	ListenService* GetService();
+	bool PushEvent(const CtrlEvent &event);
+	bool PopEvent(CtrlEvent &event);
+
+	//void Push
 private:
 	IpAddr _ipAddr;
-	Service* _pService;	//TODO:
+	ListenService* _pService;	//TODO:
 
-	MemoryPipe _pipe;
+	//
+	MemoryPipe _msgPipe;	//
+
+	MemoryPipe _eventPipe;
 };
 
 

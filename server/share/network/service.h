@@ -3,36 +3,14 @@
 
 #include "commoninclude.h"
 
-struct EpollData
-{
-    EpollData()
-    : type(0)
-    , fd(0)
-    {}
-
-    void Release()
-    {
-        delete this;
-    }
-
-    uint32 type;
-    uint32 fd;
-};
-
-enum EpollType
-{
-    EpollType_listen = 1,
-    EpollType_sock = 2,
-};
-
 
 struct IpAddr;
 
-class Service
+class ListenService
 {
 public:
-    Service(IpAddr ipAddr);
-    ~Service();
+    ListenService(IpAddr ipAddr);
+    ~ListenService();
 public:
     static void Process_static();
 public:
@@ -49,7 +27,7 @@ private:
 private:
     String _ip;
     uint32 _port;
-    int32 _listenSocketfd;
+    //int32 _listenSocketfd;
     Int32Vector _socketfdVec;
     bool _isRun;
 

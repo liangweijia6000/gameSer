@@ -15,7 +15,7 @@ bool MemoryPipe::init(uint32 size)
     _size = size;
     _buff = new char[size];
     _head = _buff;
-    _tail = _tail;
+    _tail = _head;
 
     return true;
 }
@@ -23,12 +23,12 @@ bool MemoryPipe::init(uint32 size)
 bool MemoryPipe::write(const char* data, uint32 len)
 {
     uint32 dist = _tail + _size - _head;
-    if (dist > _size)
+    if (dist >= _size)
     {
         dist = dist - _size;
     }
 
-    if (dist < len)
+    if (dist + len + 1 > _size)
     {
         return false;
     }
@@ -53,7 +53,7 @@ bool MemoryPipe::write(const char* data, uint32 len)
 bool MemoryPipe::read(char* buff, uint32 len)
 {
     uint32 dist = _tail + _size - _head;
-    if (dist > _size)
+    if (dist >= _size)
     {
         dist = dist - _size;
     }

@@ -9,6 +9,7 @@
 SINGLETON_DEFINITION(NetworkManager)
 
 #define NETWORK_MANAGER_PIPE_SIZE 1024*1024
+#define NETWORK_MANAGER_EVENT_PIPE_SIZE 5*1024
 
 NetworkManager::NetworkManager()
     : _pService(NULL)
@@ -33,20 +34,25 @@ bool NetworkManager::Init(IpAddr& in)
         return false;
     }
 
-    if (!_pipe.init(NETWORK_MANAGER_PIPE_SIZE))
+    if (!_msgPipe.init(NETWORK_MANAGER_PIPE_SIZE))
     {
         return false;
-    }    
+    }
 
-    _pService = new Service(_ipAddr);
+    if (!_eventPipe.init(NETWORK_MANAGER_EVENT_PIPE_SIZE))
+    {
+        return false;
+    }
+    
 
-    if (!_pService->Init())
+    ListenService* pService = new ListenService(_ipAddr);
+    if (!pService->Init())
     {
         LOG_ERROR("NetworkManager::Init !_pService->Start()");
         return false;
     }
 
-    if (!EpollThread::getInstance().Init(_pService))
+    if (!EpollThread::getInstance().Init())
     {
         return false;
     }
@@ -65,10 +71,25 @@ bool NetworkManager::Start()
     return true;
 }
 
-Service* NetworkManager::GetService()
+ListenService* NetworkManager::GetService()
 {
     return _pService;
 }
+
+bool NetworkManager::PushEvent(const CtrlEvent &event)
+{
+    while(!_eventPipe.write((char*)&event, sizeof(event)))
+    {
+        LOG_DEBUG("NetworkManager::PushEvent");
+        //
+    }
+}
+
+bool NetworkManager::PopEvent(CtrlEvent &event)
+{
+    return _eventPipe.read((char*)&event, sizeof(event));
+}
+
 
 
 
