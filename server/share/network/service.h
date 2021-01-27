@@ -19,7 +19,7 @@ public:
     //void Stop();
     //void Reset(IpAddr ipAddr);
 
-    bool Process_epoll();
+    //bool Process_epoll();
 
     //void SendMsg(char* msg);
     bool IsRun();

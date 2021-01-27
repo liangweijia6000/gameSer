@@ -46,10 +46,9 @@ int main(int argc,char *argv[])
 
 	while (1)
 	{
-		usleep(10000);
-		//Process();
-		LOG_DEBUG("main loop 1");
-		break;
+		usleep(1000000);
+		uint32 time = TimeManager::TimeStamp();
+		LOG_WARN("main loop time:%u", time);
 	}
 
 	return 0;

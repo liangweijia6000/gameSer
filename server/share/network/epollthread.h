@@ -37,7 +37,7 @@ public:
 	bool Init();
 	bool Start();
 	bool IsRun();
-	bool OnEvent(int32 listenfd);
+	//bool OnEvent(int32 listenfd);
 private:
 	bool _main_loop();
 	bool _process_epoll();	//

@@ -122,7 +122,7 @@ bool EpollThread::_process_epoll()
             int32 acceptfd = accept(pEpollData->fd, (struct sockaddr *)&remoteAddr, &structLen);
             if (acceptfd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
             {
-                //        
+                //
             }else
             {
                 EpollData* pEpolldata = new EpollData();
@@ -177,7 +177,7 @@ bool EpollThread::_process_event()
     CtrlEvent event;
     if(!NetworkManager::getInstance().PopEvent(event))
     {
-        return true;
+        return false;
     }
 
     LOG_DEBUG("EpollThread::_process_event type:%d", event.type);
@@ -200,12 +200,16 @@ bool EpollThread::_process_event()
         default:
         break;
     }
+
+    return true;
 }
 
+/*
 bool EpollThread::OnEvent(int32 listenfd)
 {
     
 }
+*/
 
 bool EpollThread::IsRun()
 {

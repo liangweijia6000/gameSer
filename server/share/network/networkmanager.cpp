@@ -9,7 +9,7 @@
 SINGLETON_DEFINITION(NetworkManager)
 
 #define NETWORK_MANAGER_PIPE_SIZE 1024*1024
-#define NETWORK_MANAGER_EVENT_PIPE_SIZE 5*1024
+#define NETWORK_MANAGER_EVENT_PIPE_SIZE 1024*1024
 
 NetworkManager::NetworkManager()
     : _pService(NULL)
@@ -83,6 +83,8 @@ bool NetworkManager::PushEvent(const CtrlEvent &event)
         LOG_DEBUG("NetworkManager::PushEvent");
         //
     }
+
+    return true;
 }
 
 bool NetworkManager::PopEvent(CtrlEvent &event)

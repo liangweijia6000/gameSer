@@ -21,3 +21,4 @@ server/tools/cpp/msghandle/*
 .vscode/
 *.a
 vs2013
+build/.cmake/

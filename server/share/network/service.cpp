@@ -58,7 +58,7 @@ bool ListenService::Init()
     }
 #endif //__linux__
 
-    //TODO: ADDEVENT
+    //ADDEVENT
     CtrlEvent event;
     event.type = CtrlEvent::CtrlEventType_AddListen;
     event.socketfd = listenSocketfd;
@@ -81,11 +81,6 @@ void ListenService::Stop()
 #endif //__linux__
 }
 */
-
-bool ListenService::Process_epoll()
-{
-    //
-}
 
 /*
 void ListenService::SendMsg(char* msg)
