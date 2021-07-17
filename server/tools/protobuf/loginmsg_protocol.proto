@@ -1,5 +1,7 @@
 syntax="proto2";
 
+option go_package = "./loginMsg";
+
 message LoginReqC2A
 {
 	required bytes plataccid = 1;

@@ -1,7 +1,7 @@
 package main
 
 import (
-	initmsg "agent/protocol/initmsg_protocol"
+	initmsg "agent/protocol/initmsg_protocol/initMsg"
 	"net"
 
 	"github.com/golang/protobuf/proto"
