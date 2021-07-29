@@ -38,14 +38,6 @@ IF(WIN32)
     TARGET_LINK_LIBRARIES(center share)
     TARGET_LINK_LIBRARIES(center ${PROTOBUF_LIBRARIES})
 
-
-
-
-
-
-
-
-
 ELSE()
 
 

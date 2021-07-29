@@ -14,6 +14,16 @@ public:
         return ::time(NULL);
     }
 
+    static uint32 Now()
+    {
+        return TimeStamp();
+    }
+
+    static uint32 NowMilliSecond()
+    {
+        return 0;
+    }
+
     static String TimeStr()
     {
         time_t time = TimeStamp();

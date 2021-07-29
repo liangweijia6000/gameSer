@@ -38,9 +38,7 @@ int main()
 
 	while (1)
 	{
-		usleep(1000000);
-		uint32 time = TimeManager::TimeStamp();
-		LOG_WARN("main loop time:%u", time);
+		TimerManager::getInstance().Exec();
 	}
 	
 	return 0;
