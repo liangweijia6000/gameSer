@@ -13,9 +13,9 @@ private:
     Timer(uint32 interval, uint32 times, void (*c)());
 private:
     uint32 interval;
-    uint32 nextTime;
-    uint32 loopTimes;
+    int32 loopTimes;
     void (*callBack)();
+    uint64 nextTime;
 };
 
 class TimerManager

@@ -3,12 +3,16 @@
 #include "servercommon.h"
 #include "common/gamelog.h"
 
+
 Timer::Timer()
 {
-    //
+    interval = 0;
+    loopTimes = 0;
+    callBack = NULL;
+    nextTime = 0;
 }
 
-Timer::Timer(uint32 i, uint32 t, void (*c)()) : interval(i), loopTimes(t), nextTime(TimeManager::Now() + interval), callBack(c)
+Timer::Timer(uint32 i, uint32 t, void (*c)()) : interval(i), loopTimes(t), callBack(c), nextTime(TimeManager::NowMilliSecond() + interval)
 {
     //
 }
@@ -32,11 +36,13 @@ TimerManager::~TimerManager()
 
 void TimerManager::Exec()
 {
-    uint32 now = TimeManager::NowMilliSecond();
-    //LOG_WARN("TimerManager::Exec:%u", time);
+    uint64 now = TimeManager::NowMilliSecond();
+    LOG_WARN("TimerManager::Exec milliSecond:%llu", TimeManager::NowMilliSecond());
+    LOG_WARN("TimerManager::Exec now:%llu", TimeManager::Now());
+    LOG_WARN("TimerManager::Exec timerVec.size:%d", timerVec.size());
     if (timerVec.size() == 0)
     {
-        usleep(1000);
+        usleep(1000000);
         return;
     }
 
@@ -53,8 +59,7 @@ void TimerManager::Exec()
     {
         std::push_heap(timerVec.begin(), timerVec.end());
         return;
-    }  
-    
+    }    
 
     pTimer->nextTime = now + pTimer->interval;
     if (pTimer->loopTimes != -1)

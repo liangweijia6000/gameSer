@@ -1,10 +1,14 @@
 #ifndef _TIME_MANAGER_H_
 #define _TIME_MANAGER_H_
 
-#include "servercommon.h"
+//#include <stdio.h>
+//#include <time.h>
+#include <iostream>
 
-#include <stdio.h>
-#include <time.h>
+#include <chrono>
+#include <ctime>
+
+#include "servercommon.h"
 
 class TimeManager
 {
@@ -19,9 +23,11 @@ public:
         return TimeStamp();
     }
 
-    static uint32 NowMilliSecond()
+    static uint64 NowMilliSecond()
     {
-        return 0;
+	    typedef std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds> microClock_type;
+        microClock_type tp = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
+        return tp.time_since_epoch().count();
     }
 
     static String TimeStr()
