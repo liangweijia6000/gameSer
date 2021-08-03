@@ -37,9 +37,6 @@ TimerManager::~TimerManager()
 void TimerManager::Exec()
 {
     uint64 now = TimeManager::NowMilliSecond();
-    LOG_WARN("TimerManager::Exec milliSecond:%llu", TimeManager::NowMilliSecond());
-    LOG_WARN("TimerManager::Exec now:%llu", TimeManager::Now());
-    LOG_WARN("TimerManager::Exec timerVec.size:%d", timerVec.size());
     if (timerVec.size() == 0)
     {
         usleep(1000000);

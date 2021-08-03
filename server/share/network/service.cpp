@@ -24,7 +24,6 @@ ListenService::~ListenService()
 
 bool ListenService::Init()
 {
-
     LOG_DEBUG("ListenService::Init at ip:%s port:%d", _ip.c_str(), _port);
 
 #ifdef __linux__

@@ -92,6 +92,21 @@ bool NetworkManager::PopEvent(CtrlEvent &event)
     return _eventPipe.read((char*)&event, sizeof(event));
 }
 
+bool NetworkManager::PushMsgEvent(const MsgEvent &event)
+{
+    while (!_msgPipe.write((char*)&event, sizeof(event)))
+    {
+        LOG_DEBUG("NetWorkManager::PushMsgEvent");
+    }
+
+    return true;    
+}
+
+bool NetworkManager::PopMsgEvent(MsgEvent &event)
+{
+    return _eventPipe.read((char*)&event, sizeof(event));
+}
+
 
 
 

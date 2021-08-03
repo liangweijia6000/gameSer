@@ -26,12 +26,11 @@ struct CtrlEvent
 {
 	enum CtrlEventType
 	{
-		CtrlEventType_AddListen = 1,
+		CtrlEventType_AddListen = 1,	//增加监听端口
 	};
 	uint32 type;
 	uint32 socketfd;
 };
-
 
 class NetworkManager
 {
@@ -43,16 +42,18 @@ public:
 	bool Init(IpAddr& in);
 	bool Start();
 	ListenService* GetService();
+
 	bool PushEvent(const CtrlEvent &event);
 	bool PopEvent(CtrlEvent &event);
 
-	//void Push
+	bool PushMsgEvent(const MsgEvent &event);
+	bool PopMsgEvent(MsgEvent &event);
 private:
 	IpAddr _ipAddr;
 	ListenService* _pService;	//TODO:
 
 	//
-	MemoryPipe _msgPipe;	//
+	MemoryPipe _msgPipe;	//TODO:是不是需要两个，一出一进？
 
 	MemoryPipe _eventPipe;
 };

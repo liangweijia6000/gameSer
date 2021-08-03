@@ -62,7 +62,7 @@ void* EpollThread::_thread_func_static(void* arg)   //static
 
 bool EpollThread::_main_loop()
 {
-    LOG_ERROR("EpollThread _main_loop");
+    LOG_DEBUG("EpollThread _main_loop");
 
     while (true)
     {
@@ -131,14 +131,14 @@ bool EpollThread::_process_epoll()
 
                 struct epoll_event ev;
                 ev.data.ptr = pEpolldata;
-                ev.events = EPOLLIN;
+                ev.events = EPOLLIN | EPOLLOUT; //默认水平触发
 
                 epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
             }
             continue;
         }
         
-        if (events[i].events & EPOLLIN)
+        if (events[i].events & EPOLLIN) //可读
         {
             char buf[BUFSIZ];
             memset(buf, 0, BUFSIZ);
@@ -164,7 +164,7 @@ bool EpollThread::_process_epoll()
             
         }else if (events[i].events & EPOLLOUT)
         {
-            //
+            //TODO:可写，数据怎么拿过来？怎么区分不同连接对象（哪个gameserver或者dbserver）
         }    
     }
 #endif //__linux__
