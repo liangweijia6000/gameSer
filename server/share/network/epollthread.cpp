@@ -66,18 +66,22 @@ bool EpollThread::_main_loop()
 
     while (true)
     {
-        static uint32 a = 0;
-        if (a%500 == 0)
-        {
-            LOG_DEBUG("EpollThread _main_loop %d", a/500);
-        }
-
         if (!_process_epoll())
         {
             return false;
         }
 
-        a += 1;
+        //增加计数?
+        /* if count < 1000
+
+            static uint32 a = 0;
+            if (a%500 == 0)
+            {
+                LOG_DEBUG("EpollThread _main_loop %d", a/500);
+            }
+
+            a += 1;
+        */
 
         _process_event();
     }    
@@ -92,7 +96,7 @@ bool EpollThread::_process_epoll()
         return false;
     }
     
-#ifdef __linux__
+#ifdef __linux__    //TODO:为win下调试写个select(先把win下cmake搞定...)
     struct epoll_event events[256];
 
     int32 nfds = epoll_wait(_epollfd, events, 256, 1);
@@ -164,7 +168,7 @@ bool EpollThread::_process_epoll()
             
         }else if (events[i].events & EPOLLOUT)
         {
-            //TODO:可写，数据怎么拿过来？怎么区分不同连接对象（哪个gameserver或者dbserver）
+            //TODO:可写，数据怎么拿过来？怎么区分不同连接对象(gameserver或者dbserver?)
         }    
     }
 #endif //__linux__

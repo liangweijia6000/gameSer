@@ -12,9 +12,8 @@ Timer::Timer()
     nextTime = 0;
 }
 
-Timer::Timer(uint32 i, uint32 t, void (*c)()) : interval(i), loopTimes(t), callBack(c), nextTime(TimeManager::NowMilliSecond() + interval)
+Timer::Timer(uint32 i, uint32 t, void (*c)()) : interval(i), loopTimes(t), callBack(c), nextTime(TimeManager::NowMilliSecond() + interval), del(false)
 {
-    //
 }
 
 Timer::~Timer()
@@ -39,13 +38,20 @@ void TimerManager::Exec()
     uint64 now = TimeManager::NowMilliSecond();
     if (timerVec.size() == 0)
     {
-        usleep(1000000);
+        static uint32 a = 0;
+        if (a%500 == 0)
+        {
+            LOG_DEBUG("TimerManager Exec %d", a/500);
+        }
+        a += 1;
+        //usleep(1000000);    //没活干睡1秒 //TODO:
+        sleep(0);
         return;
     }
 
     std::pop_heap(timerVec.begin(), timerVec.end());
     Timer *pTimer = timerVec[timerVec.size() - 1];
-    if (this->delTimerSet.find(pTimer) != this->delTimerSet.end() || pTimer->loopTimes == 0)
+    if (pTimer->del || pTimer->loopTimes == 0)
     {
         delete pTimer;
         timerVec.pop_back();
@@ -78,7 +84,7 @@ Timer *TimerManager::AddTimer(uint32 interval, uint32 times)
 
 void TimerManager::DelTimer(Timer *pTimer)
 {
-    delTimerSet.insert(pTimer);
+    pTimer->del = true;
 }
 
 void TimerManager::AddTimer(Timer *pTimer)

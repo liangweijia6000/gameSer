@@ -16,6 +16,7 @@ private:
     int32 loopTimes;
     void (*callBack)();
     uint64 nextTime;
+    bool del;
 };
 
 class TimerManager
@@ -32,7 +33,6 @@ private:
     void AddTimer(Timer* pTimer);
 private:
     std::vector<Timer*> timerVec;
-    std::set<Timer*> delTimerSet;
 };
 
 #endif //__TIMER_MANAGER__
