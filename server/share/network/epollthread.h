@@ -5,28 +5,6 @@
 #include "commoninclude.h"
 //#include "service.h"
 
-struct EpollData
-{
-    EpollData()
-    : type(0)
-    , fd(0)
-    {}
-
-    void Release()
-    {
-        delete this;
-    }
-
-    uint32 type;
-    uint32 fd;
-};
-
-enum EpollType
-{
-    EpollType_listen = 1,
-    EpollType_sock = 2,
-};
-
 class EpollThread
 {
 	SINGLETON_DECLARATION(EpollThread)

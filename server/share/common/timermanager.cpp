@@ -44,8 +44,7 @@ void TimerManager::Exec()
             LOG_DEBUG("TimerManager Exec %d", a/500);
         }
         a += 1;
-        //usleep(1000000);    //没活干睡1秒 //TODO:
-        sleep(0);
+        sleep(0);   //睡一下触发线程调度    //TODO:
         return;
     }
 

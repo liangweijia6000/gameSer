@@ -22,3 +22,4 @@ server/tools/cpp/msghandle/*
 *.a
 vs2013
 build/.cmake/
+build/compile_commands.json

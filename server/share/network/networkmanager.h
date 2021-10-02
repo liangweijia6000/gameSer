@@ -8,6 +8,7 @@
 #include "common/servercommon.h"
 #include "service.h"
 #include "memorypipe.h"
+#include "nw_define.h"
 
 struct IpAddr
 {
@@ -20,16 +21,6 @@ struct MsgEvent
 	uint32 type;
 	uint32 id;
 	uint32 msglen;
-};
-
-struct CtrlEvent
-{
-	enum CtrlEventType
-	{
-		CtrlEventType_AddListen = 1,	//增加监听端口
-	};
-	uint32 type;
-	uint32 socketfd;
 };
 
 class NetworkManager

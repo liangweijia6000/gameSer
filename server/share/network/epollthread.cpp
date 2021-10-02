@@ -142,7 +142,7 @@ bool EpollThread::_process_epoll()
             continue;
         }
         
-        if (events[i].events & EPOLLIN) //可读
+        if (events[i].events & EPOLLIN) //可读  //TODO:读写均通过对应的requestor
         {
             char buf[BUFSIZ];
             memset(buf, 0, BUFSIZ);
@@ -168,7 +168,7 @@ bool EpollThread::_process_epoll()
             
         }else if (events[i].events & EPOLLOUT)
         {
-            //TODO:可写，数据怎么拿过来？怎么区分不同连接对象(gameserver或者dbserver?)
+            //TODO:可写，数据怎么拿过来？怎么区分不同连接对象(server或client)
         }    
     }
 #endif //__linux__
@@ -179,30 +179,28 @@ bool EpollThread::_process_epoll()
 bool EpollThread::_process_event()
 {
     CtrlEvent event;
-    if(!NetworkManager::getInstance().PopEvent(event))
+    while(NetworkManager::getInstance().PopEvent(event))
     {
-        return false;
-    }
-
-    LOG_DEBUG("EpollThread::_process_event type:%d", event.type);
-    LOG_DEBUG("EpollThread::_process_event sockfd:%d", event.socketfd);
-    
-    switch(event.type)
-    {
-        case CtrlEvent::CtrlEventType_AddListen:
+        LOG_DEBUG("EpollThread::_process_event type:%d", event.type);
+            
+        switch(event.type)
         {
-            EpollData* pEpolldata = new EpollData();
-            pEpolldata->type = EpollType_listen;
+            case CtrlEventType_AddListen:
+            {
+                AddListenEvent* pEvent = &event.eventInfo.addListenEvent;
+                EpollData* pEpolldata = new EpollData();
+                pEpolldata->type = EpollType_listen;
 
-            struct epoll_event ev;
-            ev.data.ptr = pEpolldata;
-            ev.events = EPOLLIN;
+                struct epoll_event ev;
+                ev.data.ptr = pEpolldata;
+                ev.events = EPOLLIN;
 
-            epoll_ctl(_epollfd, EPOLL_CTL_ADD, event.socketfd, &ev);
+                epoll_ctl(_epollfd, EPOLL_CTL_ADD, pEvent->socketfd, &ev);
+            }
+            break;
+            default:
+            break;
         }
-        break;
-        default:
-        break;
     }
 
     return true;

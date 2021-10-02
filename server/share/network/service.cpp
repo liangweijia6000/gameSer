@@ -59,8 +59,9 @@ bool ListenService::Init()
 
     //ADDEVENT
     CtrlEvent event;
-    event.type = CtrlEvent::CtrlEventType_AddListen;
-    event.socketfd = listenSocketfd;
+    event.type = CtrlEventType_AddListen;
+    event.eventInfo.addListenEvent.socketfd = listenSocketfd;
+    //event.socketfd = listenSocketfd;
     NetworkManager::getInstance().PushEvent(event);
 
     return true;
