@@ -120,10 +120,10 @@ typedef std::vector<bool> BoolVector;
 	private:	static class_name* _instance;
 
 #define SINGLETON_DEFINITION(class_name)				\
-	class_name* class_name::_instance = NULL;			\
+	class_name* class_name::_instance = nullptr;			\
 	class_name& class_name::getInstance()				\
 	{													\
-	if (class_name::_instance == NULL)				\
+	if (class_name::_instance == nullptr)				\
 		{												\
 		class_name::_instance = new class_name();	\
 		}												\

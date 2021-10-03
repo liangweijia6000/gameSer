@@ -6,13 +6,13 @@
 #include "config/configmanager.h"
 #include "epollthread.h"
 
-SINGLETON_DEFINITION(NetworkManager)
-
 #define NETWORK_MANAGER_PIPE_SIZE 1024*1024
 #define NETWORK_MANAGER_EVENT_PIPE_SIZE 1024*1024
 
+SINGLETON_DEFINITION(NetworkManager)
+
 NetworkManager::NetworkManager()
-    : _pService(NULL)
+    : _pService(nullptr)
 {
 }
 
@@ -28,7 +28,7 @@ bool NetworkManager::Init(IpAddr& in)
 
     LOG_DEBUG("NetworkManager::Init ip:%s port:%d", _ipAddr.ip.c_str(), _ipAddr.port);
 
-    if (_pService != NULL)
+    if (_pService != nullptr)
     {
         LOG_ERROR("NetworkManager::Init _pService != NULL");
         return false;

@@ -57,7 +57,7 @@ void* EpollThread::_thread_func_static(void* arg)   //static
         pEpollThread->_main_loop();
     }
 
-    return NULL;
+    return nullptr;
 }
 
 bool EpollThread::_main_loop()
@@ -114,31 +114,31 @@ bool EpollThread::_process_epoll()
     {
         EpollData* pEpollData = (EpollData*)events[i].data.ptr;
 
-        if (pEpollData == NULL)
+        if (pEpollData == nullptr)
         {
             continue;
         }        
 
         if (pEpollData->type == EpollType_listen)
         {
-            struct sockaddr_in remoteAddr;
-            uint32 structLen = sizeof(struct sockaddr);
-            int32 acceptfd = accept(pEpollData->fd, (struct sockaddr *)&remoteAddr, &structLen);
-            if (acceptfd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
-            {
+            //struct sockaddr_in remoteAddr;
+            //uint32 structLen = sizeof(struct sockaddr);
+            //int32 acceptfd = accept(pEpollData->fd, (struct sockaddr *)&remoteAddr, &structLen);
+            //if (acceptfd == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+            //{
                 //
-            }else
-            {
-                EpollData* pEpolldata = new EpollData();
-                pEpolldata->type = EpollType_sock;
-                pEpollData->fd = acceptfd;
+            //}else
+            // {
+            //     EpollData* pEpolldata = new EpollData();
+            //     pEpolldata->type = EpollType_sock;
+            //     pEpollData->fd = acceptfd;
 
-                struct epoll_event ev;
-                ev.data.ptr = pEpolldata;
-                ev.events = EPOLLIN | EPOLLOUT; //默认水平触发
+            //     struct epoll_event ev;
+            //     ev.data.ptr = pEpolldata;
+            //     ev.events = EPOLLIN | EPOLLOUT; //默认水平触发
 
-                epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
-            }
+            //     epoll_ctl(_epollfd, EPOLL_CTL_ADD, acceptfd, &ev);
+            // }
             continue;
         }
         
@@ -146,20 +146,20 @@ bool EpollThread::_process_epoll()
         {
             char buf[BUFSIZ];
             memset(buf, 0, BUFSIZ);
-            int32 readSize = read(pEpollData->fd, buf, BUFSIZ);
+            int32 readSize = 0;//read(pEpollData->fd, buf, BUFSIZ);
             if (readSize < 0)
             {
                 if (errno == ECONNRESET)
                 {
-                    close(pEpollData->fd);
-                    events[i].data.ptr = NULL;
+                    //close(pEpollData->fd);
+                    events[i].data.ptr = nullptr;
                     pEpollData->Release();
                     continue;
                 }    
             }else if (readSize == 0)
             {
-                close(pEpollData->fd);
-                events[i].data.ptr = NULL;
+                //close(pEpollData->fd);
+                events[i].data.ptr = nullptr;
                 pEpollData->Release();
                 continue;
             }
@@ -182,7 +182,7 @@ bool EpollThread::_process_event()
     while(NetworkManager::getInstance().PopEvent(event))
     {
         LOG_DEBUG("EpollThread::_process_event type:%d", event.type);
-            
+
         switch(event.type)
         {
             case CtrlEventType_AddListen:

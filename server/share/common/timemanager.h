@@ -15,7 +15,7 @@ class TimeManager
 public:
     static uint32 TimeStamp()
     {
-        return ::time(NULL);
+        return ::time(nullptr);
     }
 
     static uint32 Now()

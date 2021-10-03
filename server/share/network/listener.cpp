@@ -1,5 +1,5 @@
 #include "listener.h"
-#include "requestor.h"
+//#include "requestor.h"
 
 listener::listener()
 {
@@ -11,11 +11,24 @@ listener::~listener()
 
 Requester* listener::accept()
 {
-    Requester* pRequster = NULL;
-    //
+    uint32 structLen = sizeof(struct sockaddr);
+    int32 acceptfd = ::accept(_listen_fd, (struct sockaddr *)&_remoteAddr, &structLen);
+    if(acceptfd == -1) {
+        //log
+        return nullptr;
+    }
+
+    Requester* pRequester = RequesterManager::getInstance().create();
+    if(!pRequester) {
+        return nullptr;
+    }
+
+    //_epoll_data.
 
 
 
 
-    return NULL;
+
+
+    return nullptr;
 }

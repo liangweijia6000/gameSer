@@ -26,7 +26,7 @@ private:
 #ifdef __linux__
 	pthread_t _thread_id = 0;
 #endif //__linux__
-	//ListenService* _pService = NULL;
+	//ListenService* _pService = nullptr;
 	int32 _epollfd = 0;
 	bool _isRun = false;
 };

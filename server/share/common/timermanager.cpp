@@ -8,7 +8,7 @@ Timer::Timer()
 {
     interval = 0;
     loopTimes = 0;
-    callBack = NULL;
+    callBack = nullptr;
     nextTime = 0;
 }
 

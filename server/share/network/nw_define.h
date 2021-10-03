@@ -30,7 +30,8 @@ struct EpollData
 {
     EpollData()
     : type(0)
-    , fd(0)
+    //, fd(0)
+    , ptr(nullptr)
     {}
 
     void Release()
@@ -39,7 +40,8 @@ struct EpollData
     }
 
     uint32 type;
-    uint32 fd;
+    //uint32 fd;
+    void* ptr;
 };
 
 enum EpollType

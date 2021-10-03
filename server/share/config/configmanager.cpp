@@ -32,7 +32,7 @@ const std::map<String, String>* ConfigManager::GetConfigMap(String section)
 		return &_configMap[section];
 	}
 	
-	return NULL;
+	return nullptr;
 }
 
 bool ConfigManager::GetConfigIpAddr(String section, IpAddr &ipAddr)
