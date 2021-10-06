@@ -8,7 +8,6 @@
 *.pb.h
 *.pb.cc
 *.out
-vs2017
 CMakeCache.txt
 CMakeFiles
 Makefile
@@ -21,5 +20,7 @@ server/tools/cpp/msghandle/*
 .vscode/
 *.a
 vs2013
+vs2017
+vs2019
 build/.cmake/
 build/compile_commands.json
