@@ -12,7 +12,7 @@
 SINGLETON_DEFINITION(NetworkManager)
 
 NetworkManager::NetworkManager()
-    : _pService(nullptr)
+    //: _pService(nullptr)
 {
 }
 
@@ -28,11 +28,11 @@ bool NetworkManager::Init(IpAddr& in)
 
     LOG_DEBUG("NetworkManager::Init ip:%s port:%d", _ipAddr.ip.c_str(), _ipAddr.port);
 
-    if (_pService != nullptr)
-    {
-        LOG_ERROR("NetworkManager::Init _pService != NULL");
-        return false;
-    }
+    // if (_pService != nullptr)
+    // {
+    //     LOG_ERROR("NetworkManager::Init _pService != NULL");
+    //     return false;
+    // }
 
     if (!_msgPipe.init(NETWORK_MANAGER_PIPE_SIZE))
     {
@@ -45,12 +45,12 @@ bool NetworkManager::Init(IpAddr& in)
     }
     
 
-    ListenService* pService = new ListenService(_ipAddr);
-    if (!pService->Init())
-    {
-        LOG_ERROR("NetworkManager::Init !_pService->Start()");
-        return false;
-    }
+    // ListenService* pService = new ListenService(_ipAddr);
+    // if (!pService->Init())
+    // {
+    //     LOG_ERROR("NetworkManager::Init !_pService->Start()");
+    //     return false;
+    // }
 
     if (!EpollThread::getInstance().Init())
     {
@@ -71,10 +71,10 @@ bool NetworkManager::Start()
     return true;
 }
 
-ListenService* NetworkManager::GetService()
-{
-    return _pService;
-}
+// ListenService* NetworkManager::GetService()
+// {
+//     return _pService;
+// }
 
 bool NetworkManager::PushEvent(const CtrlEvent &event)
 {

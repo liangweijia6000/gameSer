@@ -32,7 +32,7 @@ public:
 public:
 	bool Init(IpAddr& in);
 	bool Start();
-	ListenService* GetService();
+	// ListenService* GetService();
 
 	bool PushEvent(const CtrlEvent &event);
 	bool PopEvent(CtrlEvent &event);
@@ -41,7 +41,7 @@ public:
 	bool PopMsgEvent(MsgEvent &event);
 private:
 	IpAddr _ipAddr;
-	ListenService* _pService;	//TODO:
+	//ListenService* _pService;	//TODO:
 
 	//
 	MemoryPipe _msgPipe;	//TODO:是不是需要两个，一出一进？

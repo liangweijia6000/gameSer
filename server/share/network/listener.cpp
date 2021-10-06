@@ -1,16 +1,17 @@
 #include "listener.h"
 //#include "requestor.h"
 
-listener::listener()
+Listener::Listener():_epoll_data(this, EpollType_listen)
 {
 }
 
-listener::~listener()
+Listener::~Listener()
 {
 }
 
-Requester* listener::accept()
+Requester* Listener::accept()
 {
+    //struct sockaddr_in remoteAddr;
     uint32 structLen = sizeof(struct sockaddr);
     int32 acceptfd = ::accept(_listen_fd, (struct sockaddr *)&_remoteAddr, &structLen);
     if(acceptfd == -1) {
@@ -23,12 +24,27 @@ Requester* listener::accept()
         return nullptr;
     }
 
-    //_epoll_data.
+    pRequester->setfd(acceptfd);
 
+    //TODO: accept 远端连接信息保存在Requester中
 
+    return pRequester;
+}
 
+SINGLETON_DEFINITION(ListenerManager)
 
+ListenerManager::ListenerManager()
+{
+    //
+}
 
+ListenerManager::~ListenerManager()
+{
+    //
+}
 
-    return nullptr;
+Listener* ListenerManager::create()
+{
+    Listener* pListener = new Listener();
+    return pListener;
 }

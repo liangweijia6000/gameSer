@@ -10,11 +10,14 @@ public:
     Requester();
     ~Requester();
 public:
+    void setfd(int32 fd);
+public:
     void onSend();
     void onRecv();
 private:
 
     EpollData _epoll_data;
+    int32 _sockfd;
 
     char* _send_buff;
     char* _recv_buff;

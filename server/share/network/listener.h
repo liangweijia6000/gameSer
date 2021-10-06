@@ -11,17 +11,29 @@
 #include "nw_define.h"
 #include "requestor.h"
 
-class listener
+class Listener
 {
 public:
-    listener();
-    ~listener();
+    Listener();
+    ~Listener();
 public:
     Requester* accept();
 private:
     int32 _listen_fd = -1;
+
+    EpollData _epoll_data;
     
     struct sockaddr_in _remoteAddr;
+};
+
+class ListenerManager
+{
+    SINGLETON_DECLARATION(ListenerManager)
+public:
+    ListenerManager();
+    ~ListenerManager();
+public:
+    Listener* create();
 };
 
 

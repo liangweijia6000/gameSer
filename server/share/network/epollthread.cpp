@@ -10,6 +10,7 @@
 #include "epollthread.h"
 #include "networkmanager.h"
 #include "protocol/protocol.pb.h"
+#include "listener.h"
 
 SINGLETON_DEFINITION(EpollThread)
 
@@ -121,6 +122,20 @@ bool EpollThread::_process_epoll()
 
         if (pEpollData->type == EpollType_listen)
         {
+            Listener* pListener = (Listener*)pEpollData->ptr;
+            if(!pListener) {
+                LOG_ERROR("_process_epoll !pListener");
+                exit(-1);
+            }
+
+            Requester* pRequester = pListener->accept();
+            if(!pRequester) {
+                LOG_ERROR("pListener->accept !pRequester");
+                exit(-1);
+            }
+
+            //TODO:
+
             //struct sockaddr_in remoteAddr;
             //uint32 structLen = sizeof(struct sockaddr);
             //int32 acceptfd = accept(pEpollData->fd, (struct sockaddr *)&remoteAddr, &structLen);
@@ -176,6 +191,8 @@ bool EpollThread::_process_epoll()
     return true;
 }
 
+
+//TODO: 加停止监听,断开连接 等等
 bool EpollThread::_process_event()
 {
     CtrlEvent event;
@@ -187,15 +204,17 @@ bool EpollThread::_process_event()
         {
             case CtrlEventType_AddListen:
             {
+                Listener* pListener = ListenerManager::getInstance().create();
+                if(!pListener) {
+                    LOG_ERROR("_process_event create Listener error");
+                    exit(-1);
+                }
                 AddListenEvent* pEvent = &event.eventInfo.addListenEvent;
-                EpollData* pEpolldata = new EpollData();
-                pEpolldata->type = EpollType_listen;
-
                 struct epoll_event ev;
-                ev.data.ptr = pEpolldata;
+                ev.data.ptr = pListener;
                 ev.events = EPOLLIN;
 
-                epoll_ctl(_epollfd, EPOLL_CTL_ADD, pEvent->socketfd, &ev);
+                epoll_ctl(_epollfd, EPOLL_CTL_ADD, pEvent->socketfd, &ev);                
             }
             break;
             default:
@@ -205,13 +224,6 @@ bool EpollThread::_process_event()
 
     return true;
 }
-
-/*
-bool EpollThread::OnEvent(int32 listenfd)
-{
-    
-}
-*/
 
 bool EpollThread::IsRun()
 {

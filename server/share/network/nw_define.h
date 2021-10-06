@@ -28,10 +28,9 @@ struct CtrlEvent
 
 struct EpollData
 {
-    EpollData()
-    : type(0)
-    //, fd(0)
-    , ptr(nullptr)
+    EpollData(void* p, uint32 type)
+    : type(type)
+    , ptr(p)
     {}
 
     void Release()
@@ -40,7 +39,6 @@ struct EpollData
     }
 
     uint32 type;
-    //uint32 fd;
     void* ptr;
 };
 

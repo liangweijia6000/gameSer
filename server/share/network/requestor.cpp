@@ -1,12 +1,17 @@
 #include "requestor.h"
 
 
-Requester::Requester()
+Requester::Requester():_epoll_data(this, EpollType_sock)
 {
 }
 
 Requester::~Requester()
 {
+}
+
+void Requester::setfd(int32 fd)
+{
+    _sockfd = fd;
 }
 
 
@@ -22,5 +27,6 @@ RequesterManager::~RequesterManager()
 
 Requester* RequesterManager::create()
 {
-    return nullptr;
+    Requester* pRequester = new Requester();
+    return pRequester;
 }

@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"log"
-	"strconv"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -24,8 +24,8 @@ func main() {
 	log.Println("Agent" + strconv.Itoa(id) + " start")
 
 	configManager := ConfigManager{
-		configMap : make(map[string]string),
-		gsAddrConfig : make(map[string]string),
+		configMap:    make(map[string]string),
+		gsAddrConfig: make(map[string]string),
 	}
 
 	if !configManager.LoadConfig(id) {
@@ -48,14 +48,14 @@ func main() {
 
 	log.Println("working on " + ip + ":" + port)
 
-	gameClient := GameClinet {
-		ip : "127.0.0.1",
-		port : "15001",
+	gameClient := GameClinet{
+		ip:   "127.0.0.1",
+		port: "15001",
 	}
 
-	gameClient.Start();
+	gameClient.Start()
 
-	for {	//主循环怎么写
+	for { //TODO:主循环怎么写
 		time.Sleep(100000000)
 		gameClient.Process()
 	}
