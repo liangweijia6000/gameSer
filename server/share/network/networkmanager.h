@@ -1,14 +1,12 @@
 #ifndef _NETWORK_MANAGER_H_
 #define _NETWORK_MANAGER_H_
 
-#ifdef __linux__
-#include <sys/epoll.h>
-#endif //__linux__
-
 #include "common/servercommon.h"
 #include "service.h"
 #include "memorypipe.h"
 #include "nw_define.h"
+
+#include "nw_api_sock.h"
 
 struct IpAddr
 {
@@ -41,9 +39,7 @@ public:
 	bool PopMsgEvent(MsgEvent &event);
 private:
 	IpAddr _ipAddr;
-	//ListenService* _pService;	//TODO:
-
-	//
+	
 	MemoryPipe _msgPipe;	//TODO:是不是需要两个，一出一进？
 
 	MemoryPipe _eventPipe;

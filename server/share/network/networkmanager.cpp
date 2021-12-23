@@ -1,10 +1,10 @@
 #ifdef __linux__
-#include <sys/socket.h>
+//#include <sys/socket.h>
 #endif //__linux__
 
 #include "networkmanager.h"
 #include "config/configmanager.h"
-#include "epollthread.h"
+#include "socketthread.h"
 
 #define NETWORK_MANAGER_PIPE_SIZE 1024*1024
 #define NETWORK_MANAGER_EVENT_PIPE_SIZE 1024*1024
@@ -52,7 +52,7 @@ bool NetworkManager::Init(IpAddr& in)
     //     return false;
     // }
 
-    if (!EpollThread::getInstance().Init())
+    if (!SocketThread::getInstance().Init())
     {
         return false;
     }
@@ -62,9 +62,9 @@ bool NetworkManager::Init(IpAddr& in)
 
 bool NetworkManager::Start()
 {    
-    if (!EpollThread::getInstance().Start())
+    if (!SocketThread::getInstance().Start())
     {
-        LOG_ERROR("NetworkManager::Start !EpollThread::getInstance().Start()");
+        LOG_ERROR("NetworkManager::Start !SocketThread::getInstance().Start()");
         return false;
     }    
 

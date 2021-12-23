@@ -11,12 +11,13 @@ public:
     ~Requester();
 public:
     void setfd(int32 fd);
+    int32 getfd(){return _sockfd;}
+    SocketData* getSocketData(){return &_socket_data;}
 public:
     void onSend();
     void onRecv();
 private:
-
-    EpollData _epoll_data;
+    SocketData _socket_data;
     int32 _sockfd;
 
     char* _send_buff;

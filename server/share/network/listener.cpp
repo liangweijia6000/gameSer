@@ -1,7 +1,7 @@
 #include "listener.h"
-//#include "requestor.h"
+#include "nw_socketmanager.h"
 
-Listener::Listener():_epoll_data(this, EpollType_listen)
+Listener::Listener():_socket_data(this, SocketType_listen)
 {
 }
 
@@ -24,9 +24,10 @@ Requester* Listener::accept()
         return nullptr;
     }
 
+    //TODO: accept 远端连接信息保存在Requester中
     pRequester->setfd(acceptfd);
 
-    //TODO: accept 远端连接信息保存在Requester中
+    SocketManager::getInstance().add(acceptfd, SOCKET_READ, pRequester->getSocketData());
 
     return pRequester;
 }

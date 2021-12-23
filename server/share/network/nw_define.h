@@ -23,12 +23,9 @@ struct CtrlEvent
 };
 
 
-
-//TODO:
-
-struct EpollData
+struct SocketData
 {
-    EpollData(void* p, uint32 type)
+    SocketData(void* p, uint32 type)
     : type(type)
     , ptr(p)
     {}
@@ -42,10 +39,10 @@ struct EpollData
     void* ptr;
 };
 
-enum EpollType
+enum SocketType
 {
-    EpollType_listen = 1,
-    EpollType_sock = 2,
+    SocketType_listen = 1,
+    SocketType_sock = 2,
 };
 
 #endif //_NW_DEFINE_H_

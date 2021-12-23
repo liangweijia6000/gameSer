@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <unistd.h>
+
 #include "common/servercommon.h"
 #include "servervar/servervar.h"
 #include "config/configmanager.h"
 #include "protocol/protocol.pb.h"
 #include "network/networkmanager.h"
-#include "network/epollthread.h"
 
 int main(int argc,char *argv[])
 {

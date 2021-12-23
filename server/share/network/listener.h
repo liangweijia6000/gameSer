@@ -21,7 +21,7 @@ public:
 private:
     int32 _listen_fd = -1;
 
-    EpollData _epoll_data;
+    SocketData _socket_data;
     
     struct sockaddr_in _remoteAddr;
 };

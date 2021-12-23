@@ -81,18 +81,6 @@ ELSE()
     TARGET_LINK_LIBRARIES(center.bin ${PROTOBUF_LIBRARIES})
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ENDIF()
 
 
