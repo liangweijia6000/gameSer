@@ -10,6 +10,7 @@ enum CtrlEventType
 
 struct AddListenEvent
 {
+    uint32 id;  //TODO;
 	uint32 socketfd;
 };
 

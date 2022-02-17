@@ -108,13 +108,15 @@ bool SocketThread::_process_socket()
                 LOG_ERROR("pListener->accept !pRequester");
                 exit(-1);
             }
+            SocketManager::getInstance().add(pRequester->getfd(), SOCKET_READ, pRequester->getSocketData());
             continue;
         }
         
         Requester* pRequester = (Requester*)pSocketData->ptr;
 
-        if (events & SOCKET_READ)   //可读
+        if (events & SOCKET_READ)   //可读  //TODO:
         {
+            pRequester->onRecv();
             // char buf[BUFSIZ];
             // memset(buf, 0, BUFSIZ);
             // int32 readSize = 0;//read(pEpollData->fd, buf, BUFSIZ);
@@ -136,12 +138,11 @@ bool SocketThread::_process_socket()
             // }
 
             // LOG_DEBUG("read buf:%s", buf);
-
-            pRequester->onRecv();
             
         }else if (events & SOCKET_WRITE)    //可写
         {
-        }    
+            //
+        }
     }
 
     return true;
@@ -151,6 +152,7 @@ bool SocketThread::_process_socket()
 //TODO: 加停止监听,断开连接 等等
 bool SocketThread::_process_event()
 {
+    LOG_DEBUG("SocketThread::_process_event");
     CtrlEvent event;
     while(NetworkManager::getInstance().PopEvent(event))
     {
@@ -160,17 +162,14 @@ bool SocketThread::_process_event()
         {
             case CtrlEventType_AddListen:
             {
-            //     Listener* pListener = ListenerManager::getInstance().create();
-            //     if(!pListener) {
-            //         LOG_ERROR("_process_event create Listener error");
-            //         exit(-1);
-            //     }
-            //     AddListenEvent* pEvent = &event.eventInfo.addListenEvent;
-            //     struct epoll_event ev;
-            //     ev.data.ptr = pListener;
-            //     ev.events = EPOLLIN;
+                LOG_DEBUG("SocketThread::_process_event CtrlEventType_AddListen");
+                Listener* pListener = ListenerManager::getInstance().create();
+                if(!pListener) {
+                    LOG_ERROR("_process_event create Listener error");
+                }
+                AddListenEvent* pEvent = &event.eventInfo.addListenEvent;
 
-            //     //epoll_ctl(_epollfd, EPOLL_CTL_ADD, pEvent->socketfd, &ev);
+                SocketManager::getInstance().add(pListener->getListensocket(), SOCKET_READ, pListener->getSocketData());
             }
             break;
             default:

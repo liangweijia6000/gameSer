@@ -18,8 +18,11 @@ public:
     ~Listener();
 public:
     Requester* accept();
+    void setListenSocket(int32 socket){this->_listen_socket = socket;}
+    int32 getListensocket(){return this->_listen_socket;}
+    SocketData* getSocketData(){return &(this->_socket_data);}
 private:
-    int32 _listen_fd = -1;
+    int32 _listen_socket = -1;
 
     SocketData _socket_data;
     
@@ -35,6 +38,5 @@ public:
 public:
     Listener* create();
 };
-
 
 #endif //_LISTENER_H_

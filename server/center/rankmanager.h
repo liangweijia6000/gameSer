@@ -3,35 +3,40 @@
 
 #include "common/servercommon.h"
 
-struct RankInfo
-{
-    int64 uid;
-    int64 value1;
-    int64 value2;
-    int64 value3;
+
+enum RankSortType {
+    RankSortType_Desc = 1,
+    RankSortType_Asc,
 };
 
-//TODO: 要不要搞个UserManager
-struct UserInfo
+//TODO: 要不要搞个UserManager,保存所有向排行榜更新过的用户的信息
+struct UserRankInfo
 {
-    //name
-    //avatar
-    //pro
-    //
+    uint64 uid;
+    uint64 value1;
+    RankSortType valueSortType1;
+    uint64 value2;
+    RankSortType valueSortType2;
+    uint64 value3;
+    RankSortType valueSortType3;
 };
 
 class Rank
 {
 public:
-    Rank(/* args */);
+    Rank();
     ~Rank();
+public:
+    void Update(UserRankInfo& userInfo);
 private:
+    std::vector<UserRankInfo> rankVec;
+    std::map<uint64, uint64> rankIndexMap;
 };
 
 class RankManager
 {
 public:
-    RankManager(/* args */);
+    RankManager();
     ~RankManager();
 private:
 };

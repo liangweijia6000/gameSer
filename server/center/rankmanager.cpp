@@ -8,6 +8,14 @@ Rank::~Rank()
 {
 }
 
+//
+void Rank::Update(UserRankInfo& userInfo)
+{
+    //TODO:
+}
+
+//===================================================================
+
 RankManager::RankManager()
 {
 }

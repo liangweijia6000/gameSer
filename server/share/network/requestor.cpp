@@ -9,14 +9,14 @@ Requester::~Requester()
 {
 }
 
-void Requester::setfd(int32 fd)
+void Requester::setSocket(int32 socket)
 {
-    _sockfd = fd;
+    _socket = socket;
 }
 
 void Requester::onRecv()
 {
-    //
+    //int32 recv = recv(s, buf, )
 }
 
 

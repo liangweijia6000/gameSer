@@ -4,21 +4,23 @@
 #include "common/servercommon.h"
 #include "nw_define.h"
 
+
+//每个socket都对应一个Requester？ 不是 requester对应一个event
 class Requester
 {
 public:
     Requester();
     ~Requester();
 public:
-    void setfd(int32 fd);
-    int32 getfd(){return _sockfd;}
+    void setSocket(int32 socket);
+    int32 getSocket(){return _socket;}
     SocketData* getSocketData(){return &_socket_data;}
 public:
     void onSend();
     void onRecv();
 private:
     SocketData _socket_data;
-    int32 _sockfd;
+    int32 _socket;
 
     char* _send_buff;
     char* _recv_buff;
@@ -32,7 +34,6 @@ public:
     ~RequesterManager();
 public:
     Requester* create();
-
 };
 
 #endif //_REQUESTOR_H_

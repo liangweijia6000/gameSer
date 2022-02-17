@@ -27,7 +27,7 @@ class ISock
 {
 public:
     //ISock();
-    virtual ~ISock(){};
+    virtual ~ISock(){}
 public:
     virtual bool init(uint32 maxSize) = 0;
     virtual int32 wait() = 0;
